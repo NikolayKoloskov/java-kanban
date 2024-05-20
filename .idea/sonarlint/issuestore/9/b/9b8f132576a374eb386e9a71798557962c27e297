@@ -1,0 +1,27 @@
+
+w
+java:S1066M"/Merge this if statement with the enclosing one.(öºğıÿÿÿÿ8Œ¡°®ù1J$20698416-6a39-4f5a-829d-d927d810034a
+q
+java:S1066P"/Merge this if statement with the enclosing one.(‚•ú98¡°®ù1J$8745e758-f9e4-4028-81db-9143e878dbf3
+¶
+java:S1319’"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(àØá±ûÿÿÿÿ8¡°®ù1J$6bc1278f-fa94-4b21-815f-8d309362675e
+¦
+java:S1319–"bThe type of "tasks" should be an interface such as "Map" rather than the implementation "HashMap".(ŸÀâ«8¡°®ù1J$3a6fdf91-4297-4afb-9379-76e3a31f07b3
+¶
+java:S1319š"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(À§Ó¯ÿÿÿÿÿ8¡°®ù1J$4382da10-02c9-49bc-bf05-53049f917470
+®
+java:S1319"eThe type of "subTasks" should be an interface such as "Map" rather than the implementation "HashMap".(°÷¤‚ÿÿÿÿÿ8¡°®ù1J$bd94af37-c7ba-41de-ba71-9771ce712eea
+¶
+java:S1319¢"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(²§ ùùÿÿÿÿ8¡°®ù1J$dde861a9-a289-443a-b400-085ce3080ba8
+ª
+java:S1319¦"fThe type of "epicTasks" should be an interface such as "Map" rather than the implementation "HashMap".(×•šƒ8¡°®ù1J$43df0dcf-c20b-4828-b1da-297a64de9bd8
+–
+java:S1104"NMake id a static final constant or non-public and provide accessors if needed.(ƒ€«Îûÿÿÿÿ8¡°®ù1J$c636c2fc-8716-4eab-9c76-37b195da1475
+•
+java:S3776["RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ÉÙ…°8š¡°®ù1J$a1bd3c74-df21-4cd9-bccd-7c9c2e62de6f
+ƒ
+java:S1117`";Rename "subTasks" which hides the field declared at line 7.(à—Š¨ÿÿÿÿÿ8›¡°®ù1J$65672ed4-2ca1-4b05-9fa1-dd49ebd0a2b2
+ˆ
+java:S1854€"?Remove this useless assignment to local variable "idsToDelete".(¬š¬üÿÿÿÿ8—Ú½®ù1J$339233f5-2ebe-4d48-9dfa-edca75c98648
+y
+java:S1481€"0Remove this unused "idsToDelete" local variable.(¬š¬üÿÿÿÿ8˜Ú½®ù1J$1cbd6bdc-63cf-409a-8d80-ccf01a4dfd66

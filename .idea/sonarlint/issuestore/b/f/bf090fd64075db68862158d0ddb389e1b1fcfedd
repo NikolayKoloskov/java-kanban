@@ -1,0 +1,10 @@
+
+°
+java:S1319<"hThe type of "subTasks" should be an interface such as "List" rather than the implementation "ArrayList".(±ÍÁ£üÿÿÿÿ8¾†ì­ù1J$abb5456b-98cf-472d-9ac3-7f261ef74456
+¸
+java:S1319?"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(‹ËÑıÿÿÿÿ8¾†ì­ù1J$625461df-5a0e-43d2-b534-f1120d94cc0c
+‰
+java:S2259"FA "NullPointerException" could be thrown; "subTasks" is nullable here.(şŒ©é8Á†ì­ù1J$ef6e9b37-bcf0-4b6c-9e82-37d9f24a956e
+r	java:S106"+Replace this use of System.out by a logger.(â€àöüÿÿÿÿ8Ã†ì­ù1J$91402291-df7a-4da7-ae2e-78b46f1a0de5
+r	java:S106"+Replace this use of System.out by a logger.(Å¢ĞÙüÿÿÿÿ8Ã†ì­ù1J$9cf77635-bbdd-4ba2-80bf-3cff71def432
+m	java:S106!"+Replace this use of System.out by a logger.(Ò«Ú8Ã†ì­ù1J$426fb0ff-5acf-400a-9da9-7d365340955a
