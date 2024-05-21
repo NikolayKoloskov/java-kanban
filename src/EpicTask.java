@@ -3,22 +3,16 @@ import java.util.ArrayList;
 
 public class EpicTask extends Task {
     private ArrayList<SubTask> subTasks;
-    private Status epicStatus;
 
-    public EpicTask(int id, String name, String description) {
-        super(id, name, description);
+    public EpicTask(String name, String description) {
+        super(name, description, Status.NEW);
         this.subTasks = new ArrayList<>();
-        this.epicStatus = Status.NEW;
     }
 
     public void addSubtask(SubTask task) {
-        if (subTasks == null) {
-            subTasks.add(task);
-        }
         if (!subTasks.contains(task)) {
             subTasks.add(task);
-        }
-        else {
+        } else {
             System.out.println("Задача уже существует");
         }
     }
@@ -35,34 +29,38 @@ public class EpicTask extends Task {
         }
     }
 
+    public void removeAllSubtasks() {
+        if (subTasks == null) {
+            System.out.println("Список задач пуст");
+        } else {
+            subTasks.clear();
 
-
-    @Override
-    public void setStatus(Status epicStatus) {
-        this.epicStatus = epicStatus;
+        }
     }
 
-    @Override
-    public Status getStatus() {
-        return epicStatus;
+    public ArrayList<SubTask> getSubTasks() {
+        return subTasks;
+    }
+
+    public SubTask getSubTask(int id) {
+        SubTask subTask = null;
+        for (int i = 0; i < subTasks.size(); i++) {
+            if (subTasks.get(i).getMainId() == id) {
+                subTask = subTasks.get(i);
+                break;
+            }
+        }
+        return subTask;
     }
 
     @Override
     public String toString() {
         return "EpicTask{" + "\n" +
-                "subtasks=" + subTasks +"\n" +
-                "status=" + getStatus() +
-                "name='" + getName() +
-                "description='" + getDescription() +
+                "id=" + getId() + "\n" +
+                "status=" + getStatus() + "\n" +
+                "name='" + getName() + "\n" +
+                "description='" + getDescription() + "\n" +
+                "subtasks=" + subTasks + "\n" +
                 '}';
     }
-
-    public void setSubTasks(ArrayList<SubTask> subTasks) {
-        this.subTasks = subTasks;
-    }
-    public ArrayList<SubTask> getSubTasks() {
-        return subTasks;
-    }
-
-
 }

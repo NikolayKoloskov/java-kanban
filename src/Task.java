@@ -1,14 +1,13 @@
 public class Task {
-    protected final int id;
+    private int id;
     private String name;
     private String description;
     private Status status;
 
-    public Task(int id, String name, String description) {
-        this.id = id;
+    public Task(String name, String description, Status status){
         this.name = name;
         this.description = description;
-        this.status = Status.NEW;
+        this.status = status;
     }
 
     public int getId() {
@@ -20,6 +19,11 @@ public class Task {
     }
 
     public void setName(String name) {
+        this.name = name;
+    }
+    public void update(String name, String description, Status status){
+        this.status = status;
+        this.description = description;
         this.name = name;
     }
 
@@ -35,8 +39,8 @@ public class Task {
         return status;
     }
 
-    public void setStatus(Status epicStatus) {
-        this.status = epicStatus;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
 
@@ -47,6 +51,11 @@ public class Task {
                 "name='" + name + "," +
                 "description='" + description + "," +
                 "status=" + status + "," +
+                "\n" +
                 '}';
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
