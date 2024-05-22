@@ -27,25 +27,23 @@ public class TaskManager {
         return subTasks.get(id);
     }
 
-    public void createTask(String name, String description, Status status) {
-        Task task = new Task(name, description, status);
+    public void createTask(Task task){
         task.setId(id);
         tasks.put(id, task);
         id++;
     }
 
-    public void createEpicTask(String name, String description) {
-        EpicTask epicTask = new EpicTask(name, description);
+    public void createEpicTask(EpicTask epicTask){
         epicTask.setId(id);
         epicTasks.put(id, epicTask);
         autoSetEpicStatus(id);
         id++;
     }
 
-    public void createSubTask(int mainId, String name, String description, Status status) {
-        SubTask subTask = new SubTask(mainId, name, description, status);
-        subTask.setId(id);
+    public void createSubTask(SubTask subTask){
+        int mainId = subTask.getMainId();
         if (epicTasks.containsKey(mainId)) {
+            subTask.setId(id);
             EpicTask epicTask = epicTasks.get(mainId);
             epicTask.addSubtask(subTask);
             subTasks.put(id, subTask);
@@ -55,10 +53,14 @@ public class TaskManager {
     }
 
     public ArrayList<SubTask> getAllSubTasks(int epicId) {
-        return epicTasks.get(epicId).getSubTasks();
+        if (!epicTasks.containsKey(epicId)) {
+            return epicTasks.get(epicId).getSubTasks();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
-    public void autoSetEpicStatus(int id) {
+    private void autoSetEpicStatus(int id) {
         if (!epicTasks.isEmpty()) {
             boolean allNew = true;
             boolean anyInProgress = false;
@@ -87,14 +89,16 @@ public class TaskManager {
         }
     }
 
-    public void deleteTask(int idDelete) {
+    public void deleteTask(Task task) {
+        int idDelete = task.getId();
         tasks.remove(idDelete);
     }
 
-    public void deleteEpicTask(int idDelete) {
+    public void deleteEpicTask(EpicTask epicTask) {
+        int idDelete = epicTask.getId();
         if (epicTasks.containsKey(idDelete)) {
-            EpicTask epicTask = epicTasks.get(idDelete);
-            ArrayList<SubTask> subTasksToDelete = epicTask.getSubTasks();
+            EpicTask epicTaskToDelete = epicTasks.get(idDelete);
+            ArrayList<SubTask> subTasksToDelete = epicTaskToDelete.getSubTasks();
             for (SubTask subTask : subTasksToDelete) {
                 subTasks.remove(subTask.getId());
             }
@@ -102,9 +106,9 @@ public class TaskManager {
         }
     }
 
-    public void deleteSubTask(int idDelete) {
+    public void deleteSubTask(SubTask subTask) {
+        int idDelete = subTask.getId();
         if (subTasks.containsKey(idDelete)) {
-            SubTask subTask = subTasks.get(idDelete);
             EpicTask epicTask = epicTasks.get(subTask.getMainId());
             epicTask.removeSubtask(subTask);
             subTasks.remove(idDelete);
@@ -124,36 +128,40 @@ public class TaskManager {
     public void deleteAllSubTasks() {
         for (EpicTask epicTask : epicTasks.values()) {
             epicTask.removeAllSubtasks();
+            for (EpicTask epicTask1: epicTasks.values()) {
+                autoSetEpicStatus(epicTask1.getId());
+            }
         }
         subTasks.clear();
     }
 
-    public void updateTask(int id, String name, String description, Status status) {
+    public void updateTask(Task task) {
+        int id = task.getId();
         if (tasks.containsKey(id)) {
-            Task task = tasks.get(id);
-            task.setName(name);
-            task.setDescription(description);
-            task.setStatus(status);
+            tasks.put(id, task);
         }
     }
 
-    public void updateEpicTask(int id, String name, String description) {
+    public void updateEpicTask(EpicTask epicTask) {
+        int id = epicTask.getId();
         if (epicTasks.containsKey(id)) {
-            EpicTask epicTask = epicTasks.get(id);
-            epicTask.setName(name);
-            epicTask.setDescription(description);
+            epicTasks.put(id, epicTask);
+            autoSetEpicStatus(id);
         }
     }
 
-    public void updateSubTask(int id, String name, String description, Status status) {
+    public void updateSubTask(SubTask subTask) {
+        int id = subTask.getId();
         int mainId = subTasks.get(id).getMainId();
-        if ((subTasks.containsKey(id)) && (epicTasks.containsKey(mainId))) {
-            SubTask subTask = subTasks.get(id);
-            subTask.update(name, description, status);
-            EpicTask epicTask = epicTasks.get(mainId);
-            SubTask subTask1 = epicTask.getSubTask(mainId);
-            subTask1.update(name, description, status);
-            autoSetEpicStatus(mainId);
+        if (subTasks.get(id).getMainId() == subTask.getMainId()) {
+            if ((subTasks.containsKey(id)) && (epicTasks.containsKey(mainId))) {
+                SubTask subTaskToUpdate = subTasks.get(id);
+                subTaskToUpdate.update(subTask.getName(), subTask.getDescription(), subTask.getStatus());
+                EpicTask epicTask = epicTasks.get(mainId);
+                SubTask subTask1 = epicTask.getSubTask(id);
+                subTask1.update(subTask.getName(), subTask.getDescription(), subTask.getStatus());
+                autoSetEpicStatus(mainId);
+            }
         }
     }
 

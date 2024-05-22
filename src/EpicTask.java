@@ -45,7 +45,7 @@ public class EpicTask extends Task {
     public SubTask getSubTask(int id) {
         SubTask subTask = null;
         for (int i = 0; i < subTasks.size(); i++) {
-            if (subTasks.get(i).getMainId() == id) {
+            if (subTasks.get(i).getId() == id) {
                 subTask = subTasks.get(i);
                 break;
             }
