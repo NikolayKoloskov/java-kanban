@@ -34,7 +34,6 @@ public class EpicTask extends Task {
             System.out.println("Список задач пуст");
         } else {
             subTasks.clear();
-
         }
     }
 

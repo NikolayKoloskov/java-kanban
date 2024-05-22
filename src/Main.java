@@ -49,7 +49,11 @@ public class Main {
         manager.updateSubTask(subTask2);
         manager.updateSubTask(subTask3);
         manager.updateSubTask(subTask4);
-
+        System.out.println("getAllSubTasksByEpicId");
+        System.out.println(manager.getAllSubTasksByEpicId(epicTask1.getId()));
+        manager.deleteAllSubTasksInEpic(epicTask1);
+        System.out.println("deleteAllSubTasksInEpic");
+        System.out.println(manager.getAllSubTasksByEpicId(epicTask1.getId()));
 
         System.out.println("Отредактированные задачи:");
         System.out.println(manager.getAllTasks());

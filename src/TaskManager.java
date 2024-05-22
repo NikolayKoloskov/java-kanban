@@ -52,12 +52,14 @@ public class TaskManager {
         }
     }
 
-    public ArrayList<SubTask> getAllSubTasks(int epicId) {
-        if (!epicTasks.containsKey(epicId)) {
-            return epicTasks.get(epicId).getSubTasks();
+    public ArrayList<SubTask> getAllSubTasksByEpicId(int epicId) {
+        ArrayList<SubTask> subTask;
+        if (epicTasks.containsKey(epicId)) {
+            subTask = epicTasks.get(epicId).getSubTasks();
         } else {
-            return new ArrayList<>();
+            subTask = new ArrayList<>();
         }
+        return subTask;
     }
 
     private void autoSetEpicStatus(int id) {
@@ -124,16 +126,30 @@ public class TaskManager {
         epicTasks.clear();
         subTasks.clear();
     }
-
+    //Метод удаляет вообще все подзадачи по этому ничего на вход не принимает
     public void deleteAllSubTasks() {
         for (EpicTask epicTask : epicTasks.values()) {
             epicTask.removeAllSubtasks();
+            //тут делаю циклом по всем эпикам - так как удалились подзадачи у всех эпиков
             for (EpicTask epicTask1: epicTasks.values()) {
                 autoSetEpicStatus(epicTask1.getId());
             }
         }
         subTasks.clear();
     }
+    //Добавил метод для удаления подзадач по эпику
+    //сначала удаляю все подзадачи из мапы подзадач - потом чищу эти подзадачи в эпике и обновляю статус у эпика
+    public void deleteAllSubTasksInEpic(EpicTask epicTask) {
+        if (epicTasks.containsKey(epicTask.getId())){
+            epicTasks.put(epicTask.getId(), epicTask);
+            for (SubTask subTask : epicTask.getSubTasks()) {
+                subTasks.remove(subTask.getId());
+            }
+            epicTask.removeAllSubtasks();
+            autoSetEpicStatus(epicTask.getId());
+        }
+    }
+
 
     public void updateTask(Task task) {
         int id = task.getId();
@@ -145,23 +161,25 @@ public class TaskManager {
     public void updateEpicTask(EpicTask epicTask) {
         int id = epicTask.getId();
         if (epicTasks.containsKey(id)) {
-            epicTasks.put(id, epicTask);
+            EpicTask epicTask1 = epicTasks.get(id);
+            epicTask1.setName(epicTask.getName());
+            epicTask1.setDescription(epicTask.getDescription());
             autoSetEpicStatus(id);
         }
     }
 
     public void updateSubTask(SubTask subTask) {
         int id = subTask.getId();
-        int mainId = subTasks.get(id).getMainId();
-        if (subTasks.get(id).getMainId() == subTask.getMainId()) {
-            if ((subTasks.containsKey(id)) && (epicTasks.containsKey(mainId))) {
+        int mainId = subTask.getMainId();//поменял на вытаскивание этого id из таски которая к нам пришла а не из мапы
+        //обьединил if - в 1 так как один без другого не имет значения
+        if ((subTasks.containsKey(id)) && (epicTasks.containsKey(mainId)) && (subTasks.get(id).getMainId() == subTask.getMainId())){
                 SubTask subTaskToUpdate = subTasks.get(id);
                 subTaskToUpdate.update(subTask.getName(), subTask.getDescription(), subTask.getStatus());
                 EpicTask epicTask = epicTasks.get(mainId);
                 SubTask subTask1 = epicTask.getSubTask(id);
                 subTask1.update(subTask.getName(), subTask.getDescription(), subTask.getStatus());
                 autoSetEpicStatus(mainId);
-            }
+
         }
     }
 
