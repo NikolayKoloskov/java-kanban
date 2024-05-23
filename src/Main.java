@@ -51,7 +51,7 @@ public class Main {
         manager.updateSubTask(subTask4);
         System.out.println("getAllSubTasksByEpicId");
         System.out.println(manager.getAllSubTasksByEpicId(epicTask1.getId()));
-        manager.deleteAllSubTasksInEpic(epicTask1);
+        manager.deleteAllSubTasksInEpic(3);
         System.out.println("deleteAllSubTasksInEpic");
         System.out.println(manager.getAllSubTasksByEpicId(epicTask1.getId()));
 

@@ -129,19 +129,18 @@ public class TaskManager {
     //Метод удаляет вообще все подзадачи по этому ничего на вход не принимает
     public void deleteAllSubTasks() {
         for (EpicTask epicTask : epicTasks.values()) {
+            //да - действительно еще вложенный цикл был лишним - не внимательно посмотрел
             epicTask.removeAllSubtasks();
-            //тут делаю циклом по всем эпикам - так как удалились подзадачи у всех эпиков
-            for (EpicTask epicTask1: epicTasks.values()) {
-                autoSetEpicStatus(epicTask1.getId());
-            }
+            autoSetEpicStatus(epicTask.getId());
+
         }
         subTasks.clear();
     }
     //Добавил метод для удаления подзадач по эпику
     //сначала удаляю все подзадачи из мапы подзадач - потом чищу эти подзадачи в эпике и обновляю статус у эпика
-    public void deleteAllSubTasksInEpic(EpicTask epicTask) {
+    public void deleteAllSubTasksInEpic(int epicId) {
+        EpicTask epicTask = epicTasks.get(epicId);
         if (epicTasks.containsKey(epicTask.getId())){
-            epicTasks.put(epicTask.getId(), epicTask);
             for (SubTask subTask : epicTask.getSubTasks()) {
                 subTasks.remove(subTask.getId());
             }
