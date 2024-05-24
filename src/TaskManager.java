@@ -139,8 +139,8 @@ public class TaskManager {
     //Добавил метод для удаления подзадач по эпику
     //сначала удаляю все подзадачи из мапы подзадач - потом чищу эти подзадачи в эпике и обновляю статус у эпика
     public void deleteAllSubTasksInEpic(int epicId) {
-        EpicTask epicTask = epicTasks.get(epicId);
-        if (epicTasks.containsKey(epicTask.getId())){
+        if (epicTasks.containsKey(epicId)){
+            EpicTask epicTask = epicTasks.get(epicId);
             for (SubTask subTask : epicTask.getSubTasks()) {
                 subTasks.remove(subTask.getId());
             }
