@@ -7,7 +7,10 @@ public class Main {
         //И, наконец, попробуйте удалить одну из задач и один из эпиков.
         //Воспользуйтесь дебаггером среды разработки, чтобы понять логику работы программы и отладить её.3
 
-        TaskManager manager = new TaskManager();
+        Managers managers  = new Managers();
+        InMemoryTaskManager manager = (InMemoryTaskManager) managers.getDefault();
+        InMemoryHistoryManager history =(InMemoryHistoryManager) managers.getDefaultHistory();
+
         Task task1 = new Task("Задача 1", "Описание задачи 1", Status.NEW);
         Task task2 = new Task("Задача 2", "Описание задачи 2", Status.NEW);
         manager.createTask(task1);
@@ -26,56 +29,71 @@ public class Main {
         SubTask subTask4 = new SubTask(7, "Подзадача 1", "Подзадача эпика 2", Status.NEW);
         manager.createSubTask(subTask4);
 
-        System.out.println("Созданные задачи:");
-        System.out.println(manager.getAllTasks());
-        System.out.println("созданные эпики:");
-        System.out.println(manager.getAllEpicTasks());
-        System.out.println("Созданные подзадачи:");
-        System.out.println(manager.getAllSubTasks());
-
-        task1.update("Задача 1-1", "Описание задачи 1-1", Status.IN_PROGRESS);
-        task2.update("Задача 2-1", "Описание задачи 2-1", Status.DONE);
-        manager.updateTask(task1);
-        manager.updateTask(task2);
-        System.out.println("Обновленные задачи:");
-        System.out.println(manager.getAllTasks());
-
-        subTask1.update("Подзадача 1-1", "Подзадача эпика 1-1", Status.IN_PROGRESS);
-        subTask2.update("Подзадача 2-1", "Подзадача эпика 1-1", Status.DONE);
-        subTask3.update("Подзадача 3-1", "Подзадача эпика 1-1", Status.IN_PROGRESS);
-        subTask4.update("Подзадача 1-1", "Подзадача эпика 2-1", Status.DONE);
-
-        manager.updateSubTask(subTask1);
-        manager.updateSubTask(subTask2);
-        manager.updateSubTask(subTask3);
-        manager.updateSubTask(subTask4);
-        System.out.println("getAllSubTasksByEpicId");
-        System.out.println(manager.getAllSubTasksByEpicId(epicTask1.getId()));
-        manager.deleteAllSubTasksInEpic(3);
-        System.out.println("deleteAllSubTasksInEpic");
-        System.out.println(manager.getAllSubTasksByEpicId(epicTask1.getId()));
-
-        System.out.println("Отредактированные задачи:");
-        System.out.println(manager.getAllTasks());
-        System.out.println("Отредактированные эпики:");
-        System.out.println(manager.getAllEpicTasks());
-        System.out.println("Отредактированные подзадачи:");
-        System.out.println(manager.getAllSubTasks());
-
-        manager.deleteTask(task1);
-        manager.deleteEpicTask(epicTask2);
-        manager.deleteSubTask(subTask3);
-
-        System.out.println("Итоговые задачи:");
-        System.out.println(manager.getAllTasks());
-        System.out.println("Итоговые эпики:");
-        System.out.println(manager.getAllEpicTasks());
-        System.out.println("Итоговые подзадачи:");
-        System.out.println(manager.getAllSubTasks());
-
-        manager.deleteAllSubTasks();
-        System.out.println("После удаления подзадач:");
-        System.out.println(manager.getAllEpicTasks());
-        System.out.println(manager.getAllSubTasks());
+        manager.getTask(2);
+        manager.getTask(2);
+        manager.getTask(1);
+        manager.getTask(1);
+        manager.getTask(1);
+        manager.getTask(1);
+        manager.getTask(1);
+        manager.getTask(1);
+        manager.getTask(1);
+        manager.getTask(1);
+        manager.getTask(1);
+        manager.getTask(1);
+        manager.getSubTask(4);
+        System.out.println(manager.getHistory());
+//
+//        System.out.println("Созданные задачи:");
+//        System.out.println(manager.getAllTasks());
+//        System.out.println("созданные эпики:");
+//        System.out.println(manager.getAllEpicTasks());
+//        System.out.println("Созданные подзадачи:");
+//        System.out.println(manager.getAllSubTasks());
+//
+//        task1.update("Задача 1-1", "Описание задачи 1-1", Status.IN_PROGRESS);
+//        task2.update("Задача 2-1", "Описание задачи 2-1", Status.DONE);
+//        manager.updateTask(task1);
+//        manager.updateTask(task2);
+//        System.out.println("Обновленные задачи:");
+//        System.out.println(manager.getAllTasks());
+//
+//        subTask1.update("Подзадача 1-1", "Подзадача эпика 1-1", Status.IN_PROGRESS);
+//        subTask2.update("Подзадача 2-1", "Подзадача эпика 1-1", Status.DONE);
+//        subTask3.update("Подзадача 3-1", "Подзадача эпика 1-1", Status.IN_PROGRESS);
+//        subTask4.update("Подзадача 1-1", "Подзадача эпика 2-1", Status.DONE);
+//
+//        manager.updateSubTask(subTask1);
+//        manager.updateSubTask(subTask2);
+//        manager.updateSubTask(subTask3);
+//        manager.updateSubTask(subTask4);
+//        System.out.println("getAllSubTasksByEpicId");
+//        System.out.println(manager.getAllSubTasksByEpicId(epicTask1.getId()));
+//        manager.deleteAllSubTasksInEpic(3);
+//        System.out.println("deleteAllSubTasksInEpic");
+//        System.out.println(manager.getAllSubTasksByEpicId(epicTask1.getId()));
+//
+//        System.out.println("Отредактированные задачи:");
+//        System.out.println(manager.getAllTasks());
+//        System.out.println("Отредактированные эпики:");
+//        System.out.println(manager.getAllEpicTasks());
+//        System.out.println("Отредактированные подзадачи:");
+//        System.out.println(manager.getAllSubTasks());
+//
+//        manager.deleteTask(task1);
+//        manager.deleteEpicTask(epicTask2);
+//        manager.deleteSubTask(subTask3);
+//
+//        System.out.println("Итоговые задачи:");
+//        System.out.println(manager.getAllTasks());
+//        System.out.println("Итоговые эпики:");
+//        System.out.println(manager.getAllEpicTasks());
+//        System.out.println("Итоговые подзадачи:");
+//        System.out.println(manager.getAllSubTasks());
+//
+//        manager.deleteAllSubTasks();
+//        System.out.println("После удаления подзадач:");
+//        System.out.println(manager.getAllEpicTasks());
+//        System.out.println(manager.getAllSubTasks());
     }
 }
