@@ -3,8 +3,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 public class TaskTest {
 
@@ -71,10 +73,10 @@ public class TaskTest {
         manager.createSubTask(subTask);
         historyManager.add(task);
         historyManager.add(epicTask);
-        ArrayList<Task> history  = new ArrayList<>();
+        List<Task> history  = new ArrayList<>();
         history.add(task);
         history.add(epicTask);
-        ArrayList<Task> historyToCompare = historyManager.getHistory();
+        List<Task> historyToCompare = historyManager.getHistory();
         assertEquals(history, historyToCompare);
         history.add(subTask);
         historyManager.add(subTask);

@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private HashMap<Integer, Task> tasks;
-    private HashMap<Integer, EpicTask> epicTasks;
-    private HashMap<Integer, SubTask> subTasks;
+    private Map<Integer, Task> tasks;
+    private Map<Integer, EpicTask> epicTasks;
+    private Map<Integer, SubTask> subTasks;
     private int id = 1;
-    private InMemoryHistoryManager history;
+    private HistoryManager history;
 
     public InMemoryTaskManager() {
         tasks = new HashMap<>();
@@ -79,8 +80,7 @@ public class InMemoryTaskManager implements TaskManager {
         return subTask;
     }
 
-    @Override
-    public void autoSetEpicStatus(int id) {
+    private void autoSetEpicStatus(int id) {
         if (!epicTasks.isEmpty()) {
             boolean allNew = true;
             boolean anyInProgress = false;
@@ -238,7 +238,8 @@ public class InMemoryTaskManager implements TaskManager {
         return allSubTasks;
     }
 
-    public ArrayList<Task> getHistory() {
+    @Override
+    public List<Task> getHistory() {
         return history.getHistory();
     }
 }
