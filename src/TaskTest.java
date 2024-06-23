@@ -82,6 +82,31 @@ public class TaskTest {
         historyManager.add(subTask);
         historyToCompare = historyManager.getHistory();
         assertEquals(history, historyToCompare);
+    }
 
+    @Test
+    void InMemoryHistoryManagerAddAndDeleteTest(){
+        InMemoryHistoryManager historyManager  = (InMemoryHistoryManager) managers.getDefaultHistory();
+        Task task  = new Task("task1","task1", Status.NEW);
+        Task task2   = new Task("task2","task2", Status.NEW);
+        Task task3    = new Task("task3","task3", Status.NEW);
+        manager.createTask(task);
+        manager.createTask(task2);
+        manager.createTask(task3);
+
+        List<Task> history  = new ArrayList<>();
+        history.add(task);
+        history.add(task2);
+        history.add(task3);
+        historyManager.add(task);
+        historyManager.add(task2);
+        historyManager.add(task3);
+        List<Task> historyToCompare = historyManager.getHistory();
+        assertEquals(history, historyToCompare);
+
+        historyManager.remove(1);
+        history.remove(task);
+        historyToCompare = historyManager.getHistory();
+        assertEquals(history, historyToCompare);
     }
 }

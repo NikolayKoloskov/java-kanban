@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EpicTaskTest {
     Managers managers = new Managers();
@@ -70,5 +71,31 @@ class EpicTaskTest {
 //        EpicTask epicTask = new EpicTask("Эпик 1", "Описание эпика 1");
 //        manager.createEpicTask(epicTask);
 //        Assertions.assertFalse(manager.createSubTask((SubTask) epicTask)); //тут ошибка типа данных
+    }
+
+    @Test
+    void InMemoryHistoryManagerAddAndDeleteEpicTaskTest(){
+        InMemoryHistoryManager historyManager  = (InMemoryHistoryManager) managers.getDefaultHistory();
+        EpicTask task  = new EpicTask("epic1","task1");
+        EpicTask task2   = new EpicTask("epic2","task2");
+        EpicTask task3    = new EpicTask("epic3","task3");
+        manager.createEpicTask(task);
+        manager.createEpicTask(task2);
+        manager.createEpicTask(task3);
+
+        List<Task> history  = new ArrayList<>();
+        history.add(task);
+        history.add(task2);
+        history.add(task3);
+        historyManager.add(task);
+        historyManager.add(task2);
+        historyManager.add(task3);
+        List<Task> historyToCompare = historyManager.getHistory();
+        assertEquals(history, historyToCompare);
+
+        historyManager.remove(1);
+        history.remove(task);
+        historyToCompare = historyManager.getHistory();
+        assertEquals(history, historyToCompare);
     }
 }

@@ -48,13 +48,13 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" + "\n" +
-                "id=" + id + "," +
-                "name='" + name + "," +
-                "description='" + description + "," +
-                "status=" + status + "," +
-                "\n" +
-                '}';
+        return "Task"+ "\n" +"{" +
+                "id='" + id + "', " +
+                "name='" + name + "', " +
+                "description='" + description + "', " +
+                "status='" + status + "', " +
+
+                "}"+"\n";
     }
 
     public void setId(int id) {

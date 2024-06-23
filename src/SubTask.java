@@ -9,12 +9,12 @@ public class SubTask extends Task {
 
     @Override
     public String toString() {
-        return "SubTask{" +"\n" +
-                "EpicId =" + epicId + ","+
-                "Status=" + super.getStatus() + "," +
-                "Id=" + super.getId() + "," +
-                "Name=" + super.getName() + "," +
-                "Description=" + super.getDescription() + "," +
+        return "SubTask" + "\n" + "{" +
+                "EpicId =" + epicId + ", "+
+                "Status='" + super.getStatus() + "', " +
+                "Id='" + super.getId() + "', " +
+                "Name='" + super.getName() + "', " +
+                "Description='" + super.getDescription() + "', " +
                 '}'+ "\n";
     }
 
