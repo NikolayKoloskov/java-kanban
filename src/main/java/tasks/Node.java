@@ -1,6 +1,6 @@
 package tasks;
 
-public class Node<T> {
+public class Node<T extends Task> {
     public T task;
     public Node<T> next;
     public Node<T> prev;
