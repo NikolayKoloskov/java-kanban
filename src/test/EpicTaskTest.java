@@ -1,15 +1,15 @@
-package tests;
+package test;
 
 import manager.InMemoryHistoryManager;
 import manager.InMemoryTaskManager;
 import manager.Managers;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import tasks.EpicTask;
 import tasks.Status;
 import tasks.SubTask;
 import tasks.Task;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
