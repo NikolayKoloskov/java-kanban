@@ -15,9 +15,9 @@ public class Main {
         //И, наконец, попробуйте удалить одну из задач и один из эпиков.
         //Воспользуйтесь дебаггером среды разработки, чтобы понять логику работы программы и отладить её.3
 
-        Managers managers  = new Managers();
+        Managers managers = new Managers();
         InMemoryTaskManager manager = (InMemoryTaskManager) managers.getDefault();
-        InMemoryHistoryManager history =(InMemoryHistoryManager) managers.getDefaultHistory();
+        InMemoryHistoryManager history = (InMemoryHistoryManager) managers.getDefaultHistory();
 
         Task task1 = new Task("Задача 1", "Описание задачи 1", Status.NEW);
         Task task2 = new Task("Задача 2", "Описание задачи 2", Status.NEW);
@@ -36,10 +36,10 @@ public class Main {
         manager.createEpicTask(epicTask2);
 
 
-            manager.getTask(1);
-            manager.getEpicTask(3);
-            manager.getTask(1);
-            manager.getSubTask(4);
+        manager.getTask(1);
+        manager.getEpicTask(3);
+        manager.getTask(1);
+        manager.getSubTask(4);
         manager.getSubTask(6);
         manager.getSubTask(5);
         manager.getTask(2);

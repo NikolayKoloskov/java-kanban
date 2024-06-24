@@ -1,11 +1,11 @@
 package tasks;
 
-public class Node<T extends Task> {
-    public Task task;
-    public Node<Task> next;
-    public Node<Task> prev;
+public class Node<T> {
+    public T task;
+    public Node<T> next;
+    public Node<T> prev;
 
-    public Node(Node<Task> prev, Task task, Node<Task> next) {
+    public Node(Node<T> prev, T task, Node<T> next) {
         this.task = task;
         this.next = next;
         this.prev = prev;
