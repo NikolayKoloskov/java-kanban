@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TestForTask {
+public class TestForTask1 {
 
     Managers managers = new Managers();
     InMemoryTaskManager manager = (InMemoryTaskManager) managers.getDefault();
