@@ -1,10 +1,10 @@
-import Manager.InMemoryHistoryManager;
-import Manager.InMemoryTaskManager;
-import Manager.Managers;
-import Tasks.EpicTask;
-import Tasks.Status;
-import Tasks.SubTask;
-import Tasks.Task;
+import manager.InMemoryHistoryManager;
+import manager.InMemoryTaskManager;
+import manager.Managers;
+import tasks.EpicTask;
+import tasks.Status;
+import tasks.SubTask;
+import tasks.Task;
 
 public class Main {
 
