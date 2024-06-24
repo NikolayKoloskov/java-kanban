@@ -1,3 +1,13 @@
+package Test;
+
+import Manager.InMemoryHistoryManager;
+import Manager.InMemoryTaskManager;
+import Manager.Managers;
+import Tasks.EpicTask;
+import Tasks.Status;
+import Tasks.SubTask;
+import Tasks.Task;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+
 
 public class TaskTest {
 
@@ -44,9 +54,9 @@ public class TaskTest {
         manager.createEpicTask(epicTask);
         manager.createSubTask(subTask);
         Task task2  = new Task("task1","task1", Status.NEW);
-        assertInstanceOf(Task.class, manager.getTask(1), "Обьекты не совпадают");
-        assertInstanceOf(EpicTask.class, manager.getEpicTask(2), "Обьекты не совпадают");
-        assertInstanceOf(SubTask.class, manager.getSubTask(3), "Обьекты не совпадают");
+        Assertions.assertInstanceOf(Task.class, manager.getTask(1), "Обьекты не совпадают");
+        Assertions.assertInstanceOf(EpicTask.class, manager.getEpicTask(2), "Обьекты не совпадают");
+        Assertions.assertInstanceOf(SubTask.class, manager.getSubTask(3), "Обьекты не совпадают");
     }
 
     @Test

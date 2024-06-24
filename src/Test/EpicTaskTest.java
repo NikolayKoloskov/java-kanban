@@ -1,3 +1,12 @@
+package Test;
+
+import Manager.InMemoryHistoryManager;
+import Manager.InMemoryTaskManager;
+import Manager.Managers;
+import Tasks.EpicTask;
+import Tasks.Status;
+import Tasks.SubTask;
+import Tasks.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,9 +77,9 @@ class EpicTaskTest {
     void failToAddEpicTask() {
         //пока совсем не понимаю как проверить что нельзя вставить эпик как подзадачу - так как это даже не компилируется....
         //тоже самое с Subtask->epicTast
-//        EpicTask epicTask = new EpicTask("Эпик 1", "Описание эпика 1");
+//        Tasks.EpicTask epicTask = new Tasks.EpicTask("Эпик 1", "Описание эпика 1");
 //        manager.createEpicTask(epicTask);
-//        Assertions.assertFalse(manager.createSubTask((SubTask) epicTask)); //тут ошибка типа данных
+//        Assertions.assertFalse(manager.createSubTask((Tasks.SubTask) epicTask)); //тут ошибка типа данных
     }
 
     @Test

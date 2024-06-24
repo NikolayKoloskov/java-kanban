@@ -1,3 +1,5 @@
+package Tasks;
+
 public class Node<Task> {
     public Task task;
     public Node<Task> next;

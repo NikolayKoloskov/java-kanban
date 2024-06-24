@@ -1,3 +1,9 @@
+package Manager;
+
+import Tasks.EpicTask;
+import Tasks.SubTask;
+import Tasks.Task;
+
 import java.util.List;
 
 public interface TaskManager {
