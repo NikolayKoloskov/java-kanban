@@ -14,7 +14,7 @@ import tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EpicTaskTest {
+public class TestForEpic {
     Managers managers = new Managers();
     InMemoryTaskManager  manager = (InMemoryTaskManager) managers.getDefault();
 
