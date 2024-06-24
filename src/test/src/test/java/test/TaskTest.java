@@ -14,8 +14,6 @@ import tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 public class TaskTest {
 
@@ -86,11 +84,11 @@ public class TaskTest {
         history.add(task);
         history.add(epicTask);
         List<Task> historyToCompare = historyManager.getHistory();
-        assertEquals(history, historyToCompare);
+        Assertions.assertEquals(history, historyToCompare);
         history.add(subTask);
         historyManager.add(subTask);
         historyToCompare = historyManager.getHistory();
-        assertEquals(history, historyToCompare);
+        Assertions.assertEquals(history, historyToCompare);
     }
 
     @Test
@@ -111,11 +109,11 @@ public class TaskTest {
         historyManager.add(task2);
         historyManager.add(task3);
         List<Task> historyToCompare = historyManager.getHistory();
-        assertEquals(history, historyToCompare);
+        Assertions.assertEquals(history, historyToCompare);
 
         historyManager.remove(1);
         history.remove(task);
         historyToCompare = historyManager.getHistory();
-        assertEquals(history, historyToCompare);
+        Assertions.assertEquals(history, historyToCompare);
     }
 }

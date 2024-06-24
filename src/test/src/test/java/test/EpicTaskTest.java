@@ -3,9 +3,9 @@ package test;
 import manager.InMemoryHistoryManager;
 import manager.InMemoryTaskManager;
 import manager.Managers;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import tasks.EpicTask;
 import tasks.Status;
 import tasks.SubTask;
@@ -14,12 +14,9 @@ import tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-class EpicTaskTest {
+public class EpicTaskTest {
     Managers managers = new Managers();
-    InMemoryTaskManager manager = (InMemoryTaskManager) managers.getDefault();
+    InMemoryTaskManager  manager = (InMemoryTaskManager) managers.getDefault();
 
     @BeforeEach
     void init() {
@@ -28,7 +25,7 @@ class EpicTaskTest {
     }
 
     @Test
-    void addSubtask() {
+    public void addSubtask() {
         EpicTask epicTask1 = new EpicTask("Эпик 1", "Описание эпика 1");
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
@@ -37,7 +34,7 @@ class EpicTaskTest {
     }
 
     @Test
-    void removeSubtask() {
+    public void removeSubtask() {
         EpicTask epicTask1 = new EpicTask("Эпик 1", "Описание эпика 1");
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
@@ -47,7 +44,7 @@ class EpicTaskTest {
     }
 
     @Test
-    void removeAllSubtasks() {
+    public void removeAllSubtasks() {
         EpicTask epicTask1 = new EpicTask("Эпик 1", "Описание эпика 1");
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
@@ -60,7 +57,7 @@ class EpicTaskTest {
     }
 
     @Test
-    void getSubTasks() {
+    public void getSubTasks() {
         EpicTask epicTask1 = new EpicTask("Эпик 1", "Описание эпика 1");
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
@@ -71,11 +68,11 @@ class EpicTaskTest {
         subTasks.add(subTask1);
         subTasks.add(subTask2);
         List<SubTask> actualSubTasks = manager.getAllSubTasks();
-        assertArrayEquals(actualSubTasks.toArray(), subTasks.toArray());
+        Assertions.assertArrayEquals(actualSubTasks.toArray(), subTasks.toArray());
     }
 
     @Test
-    void failToAddEpicTask() {
+    public void failToAddEpicTask() {
         //пока совсем не понимаю как проверить что нельзя вставить эпик как подзадачу - так как это даже не компилируется....
         //тоже самое с Subtask->epicTast
 //        Tasks.EpicTask epicTask = new Tasks.EpicTask("Эпик 1", "Описание эпика 1");
@@ -84,7 +81,7 @@ class EpicTaskTest {
     }
 
     @Test
-    void addAndDeleteEpicTaskInMemoryHistoryManager() {
+    public void addAndDeleteEpicTaskInMemoryHistoryManager() {
         InMemoryHistoryManager historyManager = (InMemoryHistoryManager) managers.getDefaultHistory();
         EpicTask task = new EpicTask("epic1", "task1");
         EpicTask task2 = new EpicTask("epic2", "task2");
@@ -101,11 +98,11 @@ class EpicTaskTest {
         historyManager.add(task2);
         historyManager.add(task3);
         List<Task> historyToCompare = historyManager.getHistory();
-        assertEquals(history, historyToCompare);
+        Assertions.assertEquals(history, historyToCompare);
 
         historyManager.remove(1);
         history.remove(task);
         historyToCompare = historyManager.getHistory();
-        assertEquals(history, historyToCompare);
+        Assertions.assertEquals(history, historyToCompare);
     }
 }
