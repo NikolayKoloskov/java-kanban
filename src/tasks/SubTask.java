@@ -3,7 +3,7 @@ package tasks;
 public class SubTask extends Task {
     private int epicId;
 
-    public SubTask (int epicId, String name, String description, Status status) {
+    public SubTask(int epicId, String name, String description, Status status) {
         super(name, description, status);
         this.epicId = epicId;
     }
@@ -12,12 +12,12 @@ public class SubTask extends Task {
     @Override
     public String toString() {
         return "Tasks.SubTask" + "\n" + "{" +
-                "EpicId =" + epicId + ", "+
+                "EpicId =" + epicId + ", " +
                 "Tasks.Status='" + super.getStatus() + "', " +
                 "Id='" + super.getId() + "', " +
                 "Name='" + super.getName() + "', " +
                 "Description='" + super.getDescription() + "', " +
-                '}'+ "\n";
+                '}' + "\n";
     }
 
     public int getEpicId() {

@@ -21,7 +21,7 @@ public class InMemoryTaskManager implements TaskManager {
         tasks = new HashMap<>();
         epicTasks = new HashMap<>();
         subTasks = new HashMap<>();
-        history  = new InMemoryHistoryManager();
+        history = new InMemoryHistoryManager();
     }
 
     @Override

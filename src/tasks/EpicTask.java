@@ -56,12 +56,12 @@ public class EpicTask extends Task {
 
     @Override
     public String toString() {
-        return "Tasks.EpicTask"+"\n"+"{" +
+        return "Tasks.EpicTask" + "\n" + "{" +
                 "id='" + getId() + "', " +
                 "status='" + getStatus() + "', " +
                 "name='" + getName() + "', " +
                 "description='" + getDescription() + "', " +
                 "subtasks'=" + subTasks + "', " +
-                '}' + "\n" ;
+                '}' + "\n";
     }
 }

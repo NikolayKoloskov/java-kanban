@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EpicTaskTest {
     Managers managers = new Managers();
     InMemoryTaskManager manager = (InMemoryTaskManager) managers.getDefault();
+
     @BeforeEach
     void init() {
         Managers managers = new Managers();
@@ -42,7 +43,7 @@ class EpicTaskTest {
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
         manager.createSubTask(subTask1);
         manager.deleteSubTask(subTask1);
-        Assertions.assertNull(manager.getSubTask(2),  "Подзадача не удалена");
+        Assertions.assertNull(manager.getSubTask(2), "Подзадача не удалена");
     }
 
     @Test
@@ -51,11 +52,11 @@ class EpicTaskTest {
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
         manager.createSubTask(subTask1);
-        SubTask subTask2 = new SubTask(1, "Подзадача 2",  "Подзадача эпика 2", Status.NEW);
+        SubTask subTask2 = new SubTask(1, "Подзадача 2", "Подзадача эпика 2", Status.NEW);
         manager.createSubTask(subTask2);
         manager.deleteAllSubTasks();
-        Assertions.assertNull(manager.getSubTask(2),   "Подзадача не удалена");
-        Assertions.assertNull(manager.getSubTask(3),    "Подзадача не удалена");
+        Assertions.assertNull(manager.getSubTask(2), "Подзадача не удалена");
+        Assertions.assertNull(manager.getSubTask(3), "Подзадача не удалена");
     }
 
     @Test
@@ -64,9 +65,9 @@ class EpicTaskTest {
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
         manager.createSubTask(subTask1);
-        SubTask subTask2 = new SubTask(1, "Подзадача 2",  "Подзадача эпика 2", Status.NEW);
+        SubTask subTask2 = new SubTask(1, "Подзадача 2", "Подзадача эпика 2", Status.NEW);
         manager.createSubTask(subTask2);
-        List<SubTask> subTasks  = new ArrayList<>();
+        List<SubTask> subTasks = new ArrayList<>();
         subTasks.add(subTask1);
         subTasks.add(subTask2);
         List<SubTask> actualSubTasks = manager.getAllSubTasks();
@@ -83,16 +84,16 @@ class EpicTaskTest {
     }
 
     @Test
-    void InMemoryHistoryManagerAddAndDeleteEpicTaskTest(){
-        InMemoryHistoryManager historyManager  = (InMemoryHistoryManager) managers.getDefaultHistory();
-        EpicTask task  = new EpicTask("epic1","task1");
-        EpicTask task2   = new EpicTask("epic2","task2");
-        EpicTask task3    = new EpicTask("epic3","task3");
+    void InMemoryHistoryManagerAddAndDeleteEpicTaskTest() {
+        InMemoryHistoryManager historyManager = (InMemoryHistoryManager) managers.getDefaultHistory();
+        EpicTask task = new EpicTask("epic1", "task1");
+        EpicTask task2 = new EpicTask("epic2", "task2");
+        EpicTask task3 = new EpicTask("epic3", "task3");
         manager.createEpicTask(task);
         manager.createEpicTask(task2);
         manager.createEpicTask(task3);
 
-        List<Task> history  = new ArrayList<>();
+        List<Task> history = new ArrayList<>();
         history.add(task);
         history.add(task2);
         history.add(task3);
