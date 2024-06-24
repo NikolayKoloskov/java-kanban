@@ -84,7 +84,7 @@ class EpicTaskTest {
     }
 
     @Test
-    void InMemoryHistoryManagerAddAndDeleteEpicTaskTest() {
+    void addAndDeleteEpicTaskInMemoryHistoryManager() {
         InMemoryHistoryManager historyManager = (InMemoryHistoryManager) managers.getDefaultHistory();
         EpicTask task = new EpicTask("epic1", "task1");
         EpicTask task2 = new EpicTask("epic2", "task2");
