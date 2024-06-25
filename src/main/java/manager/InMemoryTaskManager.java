@@ -1,3 +1,10 @@
+package manager;
+
+import tasks.EpicTask;
+import tasks.Status;
+import tasks.SubTask;
+import tasks.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +21,7 @@ public class InMemoryTaskManager implements TaskManager {
         tasks = new HashMap<>();
         epicTasks = new HashMap<>();
         subTasks = new HashMap<>();
-        history  = new InMemoryHistoryManager();
+        history = Managers.getDefaultHistory();
     }
 
     @Override
@@ -113,6 +120,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteTask(Task task) {
         int idDelete = task.getId();
         tasks.remove(idDelete);
+        history.remove(idDelete);
     }
 
     @Override
@@ -123,7 +131,10 @@ public class InMemoryTaskManager implements TaskManager {
             ArrayList<SubTask> subTasksToDelete = epicTaskToDelete.getSubTasks();
             for (SubTask subTask : subTasksToDelete) {
                 subTasks.remove(subTask.getId());
+                history.remove(subTask.getId());
             }
+
+            history.remove(idDelete);
             epicTasks.remove(idDelete);
         }
     }
@@ -136,18 +147,29 @@ public class InMemoryTaskManager implements TaskManager {
             epicTask.removeSubtask(subTask);
             subTasks.remove(idDelete);
             autoSetEpicStatus(epicTask.getId());
+            history.remove(idDelete);
         }
     }
 
     @Override
     public void deleteAllTasks() {
+        for (Integer task : tasks.keySet()) {
+            history.remove(task);
+        }
         tasks.clear();
     }
 
     @Override
     public void deleteAllEpicTasks() {
+        for (Integer epicTask : epicTasks.keySet()) {
+            history.remove(epicTask);
+        }
         epicTasks.clear();
+        for (Integer subTask : subTasks.keySet()) {
+            history.remove(subTask);
+        }
         subTasks.clear();
+
     }
 
     //Метод удаляет вообще все подзадачи по этому ничего на вход не принимает
@@ -157,7 +179,9 @@ public class InMemoryTaskManager implements TaskManager {
             //да - действительно еще вложенный цикл был лишним - не внимательно посмотрел
             epicTask.removeAllSubtasks();
             autoSetEpicStatus(epicTask.getId());
-
+        }
+        for (Integer subTask : subTasks.keySet()) {
+            history.remove(subTask);
         }
         subTasks.clear();
     }
@@ -168,6 +192,7 @@ public class InMemoryTaskManager implements TaskManager {
             EpicTask epicTask = epicTasks.get(epicId);
             for (SubTask subTask : epicTask.getSubTasks()) {
                 subTasks.remove(subTask.getId());
+                history.remove(subTask.getId());
             }
             epicTask.removeAllSubtasks();
             autoSetEpicStatus(epicTask.getId());
