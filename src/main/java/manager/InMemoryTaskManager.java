@@ -21,7 +21,7 @@ public class InMemoryTaskManager implements TaskManager {
         tasks = new HashMap<>();
         epicTasks = new HashMap<>();
         subTasks = new HashMap<>();
-        history = new InMemoryHistoryManager();
+        history = Managers.getDefaultHistory();
     }
 
     @Override
@@ -158,8 +158,15 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllEpicTasks() {
+        for (Integer epicTask : epicTasks.keySet()) {
+            history.remove(epicTask);
+        }
         epicTasks.clear();
+        for (Integer subTask : subTasks.keySet()) {
+            history.remove(subTask);
+        }
         subTasks.clear();
+
     }
 
     //Метод удаляет вообще все подзадачи по этому ничего на вход не принимает
@@ -170,6 +177,9 @@ public class InMemoryTaskManager implements TaskManager {
             epicTask.removeAllSubtasks();
             autoSetEpicStatus(epicTask.getId());
 
+        }
+        for (Integer subTask : subTasks.keySet()) {
+            history.remove(subTask);
         }
         subTasks.clear();
     }
