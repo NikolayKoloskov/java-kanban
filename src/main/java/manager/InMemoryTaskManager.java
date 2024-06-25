@@ -179,7 +179,6 @@ public class InMemoryTaskManager implements TaskManager {
             //да - действительно еще вложенный цикл был лишним - не внимательно посмотрел
             epicTask.removeAllSubtasks();
             autoSetEpicStatus(epicTask.getId());
-
         }
         for (Integer subTask : subTasks.keySet()) {
             history.remove(subTask);
@@ -193,6 +192,7 @@ public class InMemoryTaskManager implements TaskManager {
             EpicTask epicTask = epicTasks.get(epicId);
             for (SubTask subTask : epicTask.getSubTasks()) {
                 subTasks.remove(subTask.getId());
+                history.remove(subTask.getId());
             }
             epicTask.removeAllSubtasks();
             autoSetEpicStatus(epicTask.getId());

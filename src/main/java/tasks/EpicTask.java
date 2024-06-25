@@ -37,11 +37,7 @@ public class EpicTask extends Task {
         if (subTasks == null) {
             System.out.println("Список задач пуст");
         } else {
-            for (SubTask subTask : subTasks) {
-                Managers.getDefaultHistory().remove(subTask.getId());
-            }
             subTasks.clear();
-
         }
     }
 

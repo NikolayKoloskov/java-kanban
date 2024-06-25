@@ -44,6 +44,7 @@ public class Main {
         manager.getSubTask(5);
         manager.getTask(2);
         manager.getEpicTask(7);
+        manager.deleteAllSubTasks();
         System.out.println(manager.getHistory());
         System.out.println("_______________________________________________________________");
         manager.deleteTask(task1);
