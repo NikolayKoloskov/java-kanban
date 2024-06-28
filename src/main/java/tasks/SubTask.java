@@ -20,15 +20,11 @@ public class SubTask extends Task {
                 '}' + "\n";
     }
 
-    public int getEpicId() {
-        return epicId;
-    }
-
     public void setEpicId(int epicId) {
         this.epicId = epicId;
     }
 
-    public int getMainId() {
+    public int getEpicId() {
         return epicId;
     }
 
