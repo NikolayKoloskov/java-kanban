@@ -65,7 +65,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createSubTask(SubTask subTask) {
-        int mainId = subTask.getMainId();
+        int mainId = subTask.getEpicId();
         if (epicTasks.containsKey(mainId)) {
             subTask.setId(id);
             EpicTask epicTask = epicTasks.get(mainId);
@@ -143,7 +143,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteSubTask(SubTask subTask) {
         int idDelete = subTask.getId();
         if (subTasks.containsKey(idDelete)) {
-            EpicTask epicTask = epicTasks.get(subTask.getMainId());
+            EpicTask epicTask = epicTasks.get(subTask.getEpicId());
             epicTask.removeSubtask(subTask);
             subTasks.remove(idDelete);
             autoSetEpicStatus(epicTask.getId());
@@ -221,8 +221,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateSubTask(SubTask subTask) {
         int id = subTask.getId();
-        int mainId = subTask.getMainId();
-        if ((subTasks.containsKey(id)) && (epicTasks.containsKey(mainId)) && (subTasks.get(id).getMainId() == subTask.getMainId())) {
+        int mainId = subTask.getEpicId();
+        if ((subTasks.containsKey(id)) && (epicTasks.containsKey(mainId)) && (subTasks.get(id).getEpicId() == subTask.getEpicId())) {
             SubTask subTaskToUpdate = subTasks.get(id);
             subTaskToUpdate.update(subTask.getName(), subTask.getDescription(), subTask.getStatus());
             EpicTask epicTask = epicTasks.get(mainId);

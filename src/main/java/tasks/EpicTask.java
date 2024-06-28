@@ -20,13 +20,15 @@ public class EpicTask extends Task {
     }
 
     public void removeSubtask(SubTask task) {
-        if (subTasks == null) {
-            System.out.println("Список задач пуст");
-        } else {
-            if (subTasks.contains(task)) {
-                subTasks.remove(task);
+        if (task != null) {
+            if (subTasks == null) {
+                System.out.println("Список задач пуст");
             } else {
-                System.out.println("Задача не найдена");
+                if (subTasks.contains(task)) {
+                    subTasks.remove(task);
+                } else {
+                    System.out.println("Задача не найдена");
+                }
             }
         }
     }
