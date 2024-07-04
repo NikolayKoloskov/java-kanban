@@ -1,16 +1,15 @@
 package test;
 
-import manager.InMemoryHistoryManager;
-import manager.InMemoryTaskManager;
-import manager.Managers;
-import org.junit.Test;
+import main.java.manager.InMemoryTaskManager;
+import main.java.manager.ManagerSaveException;
+import main.java.manager.Managers;
+import main.java.tasks.EpicTask;
+import main.java.tasks.Status;
+import main.java.tasks.SubTask;
+import main.java.tasks.Task;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import tasks.EpicTask;
-import tasks.Status;
-import tasks.SubTask;
-import tasks.Task;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void checkGetTask() {
+    public void checkGetTask() throws ManagerSaveException {
         Task task = new Task(taskName, description, Status.NEW);
         Task taskToCheck = null;
         Assertions.assertNull(manager.getTask(0));
@@ -45,7 +44,7 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void checkGetEpicTask() {
+    public void checkGetEpicTask() throws ManagerSaveException {
         EpicTask epicTask = new EpicTask(epicTaskName, description);
         EpicTask taskToCheck = null;
         Assertions.assertNull(manager.getEpicTask(0));
@@ -55,7 +54,7 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void checkTaskById() {
+    public void checkTaskById() throws ManagerSaveException {
         Task task = new Task(taskName, description, Status.NEW);
         Task task2 = new Task(taskName, description, Status.NEW);
         manager.createTask(task);
@@ -64,14 +63,14 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void checkEqualsTaskById() {
+    public void checkEqualsTaskById() throws ManagerSaveException {
         Task task = new Task(taskName, description, Status.NEW);
         manager.createTask(task);
         Assertions.assertEquals(task, manager.getTask(1));
     }
 
     @Test
-    public void validCreationOfObjects() {
+    public void validCreationOfObjects() throws ManagerSaveException {
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
         SubTask subTask = new SubTask(2, "subTask1", "subTask1", Status.NEW);
@@ -85,7 +84,7 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void addSubtask() {
+    public void addSubtask() throws ManagerSaveException {
         EpicTask epicTask1 = new EpicTask("Эпик 1", "Описание эпика 1");
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
@@ -94,7 +93,7 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void getSubtask() {
+    public void getSubtask() throws ManagerSaveException {
         EpicTask epicTask1 = new EpicTask("Эпик 1", "Описание эпика 1");
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
@@ -104,7 +103,7 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void removeSubtask() {
+    public void removeSubtask() throws ManagerSaveException {
         EpicTask epicTask1 = new EpicTask("Эпик 1", "Описание эпика 1");
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
@@ -116,7 +115,7 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void removeAllSubtasks() {
+    public void removeAllSubtasks() throws ManagerSaveException {
         EpicTask epicTask1 = new EpicTask("Эпик 1", "Описание эпика 1");
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
@@ -129,7 +128,7 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void getSubTasks() {
+    public void getSubTasks() throws ManagerSaveException {
         EpicTask epicTask1 = new EpicTask("Эпик 1", "Описание эпика 1");
         manager.createEpicTask(epicTask1);
         SubTask subTask1 = new SubTask(1, "Подзадача 1", "Подзадача эпика 1", Status.NEW);
@@ -144,7 +143,7 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void searchTestByIDInMemoryTaskManager() {
+    public void searchTestByIDInMemoryTaskManager() throws ManagerSaveException {
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
         SubTask subTask = new SubTask(2, "subTask1", "subTask1", Status.NEW);
@@ -157,8 +156,8 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void checkUpdateTask(){
-        Task task  = new Task("task1",  "task1", Status.NEW);
+    public void checkUpdateTask() throws ManagerSaveException {
+        Task task = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
         task.update("updated", "updated", Status.IN_PROGRESS);
         Assertions.assertEquals(task, manager.getTask(1));
@@ -167,16 +166,16 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void checkDescriptionInTask(){
-        Task task  = new Task("task1",  "task1", Status.NEW);
+    public void checkDescriptionInTask() throws ManagerSaveException {
+        Task task = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
         task.setDescription("updated1");
         Assertions.assertEquals("updated1", manager.getTask(1).getDescription());
     }
 
     @Test
-    public void checkStatusInTask(){
-        Task task  = new Task("task1",  "task1", Status.NEW);
+    public void checkStatusInTask() throws ManagerSaveException {
+        Task task = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
         task.setStatus(Status.IN_PROGRESS);
         Assertions.assertEquals(Status.IN_PROGRESS, manager.getTask(1).getStatus());

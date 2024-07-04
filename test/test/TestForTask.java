@@ -1,15 +1,16 @@
 package test;
 
-import manager.InMemoryHistoryManager;
-import manager.InMemoryTaskManager;
-import manager.Managers;
+import main.java.manager.InMemoryHistoryManager;
+import main.java.manager.InMemoryTaskManager;
+import main.java.manager.ManagerSaveException;
+import main.java.manager.Managers;
+import main.java.tasks.EpicTask;
+import main.java.tasks.Status;
+import main.java.tasks.SubTask;
+import main.java.tasks.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tasks.EpicTask;
-import tasks.Status;
-import tasks.SubTask;
-import tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class TestForTask {
     }
 
     @Test
-    void checkTaskById() {
+    void checkTaskById() throws ManagerSaveException {
         Task task = new Task("task1", "task1", Status.NEW);
         Task task2 = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
@@ -36,14 +37,14 @@ public class TestForTask {
     }
 
     @Test
-    void checkEqualsTaskbyId() {
+    void checkEqualsTaskbyId() throws ManagerSaveException {
         Task task = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
         Assertions.assertEquals(task, manager.getTask(1));
     }
 
     @Test
-    void validCreationfOfObjects() {
+    void validCreationfOfObjects() throws ManagerSaveException {
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
         SubTask subTask = new SubTask(2, "subTask1", "subTask1", Status.NEW);
@@ -57,7 +58,7 @@ public class TestForTask {
     }
 
     @Test
-    void searchTestByIDInMemoryTaskManager() {
+    void searchTestByIDInMemoryTaskManager() throws ManagerSaveException {
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
         SubTask subTask = new SubTask(2, "subTask1", "subTask1", Status.NEW);
@@ -70,7 +71,7 @@ public class TestForTask {
     }
 
     @Test
-    void objectToCompareInMemoryHistoryManager() {
+    void objectToCompareInMemoryHistoryManager() throws ManagerSaveException {
         InMemoryHistoryManager historyManager = (InMemoryHistoryManager) managers.getDefaultHistory();
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
@@ -92,7 +93,7 @@ public class TestForTask {
     }
 
     @Test
-    void addAndDeleteInMemoryHistoryManager() {
+    void addAndDeleteInMemoryHistoryManager() throws ManagerSaveException {
         InMemoryHistoryManager historyManager = (InMemoryHistoryManager) managers.getDefaultHistory();
         Task task = new Task("task1", "task1", Status.NEW);
         Task task2 = new Task("task2", "task2", Status.NEW);
