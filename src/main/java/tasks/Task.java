@@ -7,11 +7,15 @@ public class Task {
     private String name;
     private String description;
     private Status status;
+    TaskType taskType;
+
+
 
     public Task(String name, String description, Status status) {
         this.name = name;
         this.description = description;
         this.status = status;
+        this.taskType  = TaskType.TASK;
     }
 
     public int getId() {
@@ -48,6 +52,13 @@ public class Task {
         this.status = status;
     }
 
+    public TaskType getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
+    }
 
     @Override
     public String toString() {
@@ -69,7 +80,7 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status;
+        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status && taskType  == task.taskType;
     }
 
     @Override

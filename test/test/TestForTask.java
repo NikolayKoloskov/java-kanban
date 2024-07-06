@@ -2,7 +2,6 @@ package test;
 
 import main.java.manager.InMemoryHistoryManager;
 import main.java.manager.InMemoryTaskManager;
-import main.java.manager.ManagerSaveException;
 import main.java.manager.Managers;
 import main.java.tasks.EpicTask;
 import main.java.tasks.Status;
@@ -37,14 +36,14 @@ public class TestForTask {
     }
 
     @Test
-    void checkEqualsTaskbyId() throws ManagerSaveException {
+    void checkEqualsTaskById() throws ManagerSaveException {
         Task task = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
         Assertions.assertEquals(task, manager.getTask(1));
     }
 
     @Test
-    void validCreationfOfObjects() throws ManagerSaveException {
+    void validCreationOfObjects() throws ManagerSaveException {
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
         SubTask subTask = new SubTask(2, "subTask1", "subTask1", Status.NEW);

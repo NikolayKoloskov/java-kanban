@@ -1,7 +1,6 @@
 package test;
 
 import main.java.manager.FileBackedTaskManager;
-import main.java.manager.ManagerSaveException;
 import main.java.tasks.EpicTask;
 import main.java.tasks.Status;
 import main.java.tasks.SubTask;
@@ -12,17 +11,20 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class TestForBackedTaskManager {
-    FileBackedTaskManager manager = new FileBackedTaskManager();
+    FileBackedTaskManager manager = new FileBackedTaskManager(Paths.get(""), Paths.get(""));
     File file = new File("./src/main/java/manager/StorageOfTasks.cvs");
+    Path paths = Paths.get("", String.valueOf(file));
 
     public TestForBackedTaskManager() throws ManagerSaveException {
     }
 
     @BeforeEach()
     public void setUp() throws ManagerSaveException {
-        manager = new FileBackedTaskManager();
+        manager = new FileBackedTaskManager(Paths.get(""), Paths.get(""));
 
     }
 
@@ -31,7 +33,7 @@ public class TestForBackedTaskManager {
         File file = new File("./src/main/java/manager/StorageOfTasks.cvs");
         file.delete();
         Assertions.assertFalse(file.exists());
-        manager = new FileBackedTaskManager();
+        manager = new FileBackedTaskManager(Paths.get(""), paths);
         Assertions.assertTrue(file.exists());
     }
 
@@ -45,7 +47,9 @@ public class TestForBackedTaskManager {
         manager.createEpicTask(task2);
         manager.createSubTask(task3);
         manager.createSubTask(task4);
-        FileBackedTaskManager manager2 = FileBackedTaskManager.loadFromFile(file);
+
+        FileBackedTaskManager manager2 = new FileBackedTaskManager(Paths.get(""), paths);
+        manager2 = manager2.loadFromFile(file);
         Assertions.assertEquals(task1, manager2.getTask(1));
         Assertions.assertEquals(task2, manager2.getEpicTask(2));
         Assertions.assertEquals(task3, manager2.getSubTask(3));
@@ -62,7 +66,8 @@ public class TestForBackedTaskManager {
         manager.createEpicTask(task2);
         manager.createSubTask(task3);
         manager.createSubTask(task4);
-        FileBackedTaskManager manager2 = FileBackedTaskManager.loadFromFile(file);
+        FileBackedTaskManager manager2 = new FileBackedTaskManager(Paths.get(""), paths);
+        manager2.loadFromFile(file);
         Assertions.assertEquals(manager.getHistory(), manager2.getHistory());
     }
 }

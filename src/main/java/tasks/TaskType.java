@@ -1,6 +1,6 @@
 package main.java.tasks;
 
-public enum TaskTypes {
+public enum TaskType {
     TASK,
     EPIC_TASK,
     SUB_TASK
