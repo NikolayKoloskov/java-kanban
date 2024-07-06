@@ -28,7 +28,7 @@ public class TestForInMemoryHistoryManager {
     }
 
     @Test
-    public void addAndDeleteEpicTaskInMemoryHistoryManager() throws ManagerSaveException {
+    public void addAndDeleteEpicTaskInMemoryHistoryManager() {
         InMemoryHistoryManager historyManager = (InMemoryHistoryManager) Managers.getDefaultHistory();
         EpicTask task = new EpicTask("epic1", "task1");
         EpicTask task2 = new EpicTask("epic2", "task2");
@@ -55,7 +55,7 @@ public class TestForInMemoryHistoryManager {
     }
 
     @Test
-    public void objectToCompareInMemoryHistoryManager() throws ManagerSaveException {
+    public void objectToCompareInMemoryHistoryManager() {
         InMemoryHistoryManager historyManager = (InMemoryHistoryManager) Managers.getDefaultHistory();
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
@@ -77,7 +77,7 @@ public class TestForInMemoryHistoryManager {
     }
 
     @Test
-    public void addAndDeleteInMemoryHistoryManager() throws ManagerSaveException {
+    public void addAndDeleteInMemoryHistoryManager() {
         InMemoryHistoryManager historyManager = (InMemoryHistoryManager) Managers.getDefaultHistory();
         Task task = new Task("task1", "task1", Status.NEW);
         Task task2 = new Task("task2", "task2", Status.NEW);

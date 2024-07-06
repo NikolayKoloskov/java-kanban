@@ -55,7 +55,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public static void main(String[] args) throws ManagerSaveException, IOException {
         File file = new File("./src/main/java/manager/StorageOfTasks.cvs");
-        Task task = new Task("taskname1",  "taskDesc1", Status.NEW);
+        Task task = new Task("taskname1", "taskDesc1", Status.NEW);
         FileBackedTaskManager manager = new FileBackedTaskManager(Paths.get(""), file.toPath());
         manager.createTask(task);
         manager.createTask(new Task("taskname2", "taskDesc2", Status.DONE));
@@ -73,7 +73,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
         System.out.println(manager2.getTasks());
         System.out.println("\n ___________________________ \n");
-        FileBackedTaskManager manager3  = new FileBackedTaskManager(Paths.get(""), file.toPath());
+        FileBackedTaskManager manager3 = new FileBackedTaskManager(Paths.get(""), file.toPath());
         manager3 = manager3.loadFromFile(file);
         manager3.createTask(task);
 

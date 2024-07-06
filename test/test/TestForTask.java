@@ -27,7 +27,7 @@ public class TestForTask {
     }
 
     @Test
-    void checkTaskById() throws ManagerSaveException {
+    void checkTaskById() {
         Task task = new Task("task1", "task1", Status.NEW);
         Task task2 = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
@@ -36,14 +36,14 @@ public class TestForTask {
     }
 
     @Test
-    void checkEqualsTaskById() throws ManagerSaveException {
+    void checkEqualsTaskById() {
         Task task = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
         Assertions.assertEquals(task, manager.getTask(1));
     }
 
     @Test
-    void validCreationOfObjects() throws ManagerSaveException {
+    void validCreationOfObjects() {
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
         SubTask subTask = new SubTask(2, "subTask1", "subTask1", Status.NEW);
@@ -57,7 +57,7 @@ public class TestForTask {
     }
 
     @Test
-    void searchTestByIDInMemoryTaskManager() throws ManagerSaveException {
+    void searchTestByIDInMemoryTaskManager() {
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
         SubTask subTask = new SubTask(2, "subTask1", "subTask1", Status.NEW);
@@ -70,7 +70,7 @@ public class TestForTask {
     }
 
     @Test
-    void objectToCompareInMemoryHistoryManager() throws ManagerSaveException {
+    void objectToCompareInMemoryHistoryManager() {
         InMemoryHistoryManager historyManager = (InMemoryHistoryManager) managers.getDefaultHistory();
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
@@ -92,7 +92,7 @@ public class TestForTask {
     }
 
     @Test
-    void addAndDeleteInMemoryHistoryManager() throws ManagerSaveException {
+    void addAndDeleteInMemoryHistoryManager() {
         InMemoryHistoryManager historyManager = (InMemoryHistoryManager) managers.getDefaultHistory();
         Task task = new Task("task1", "task1", Status.NEW);
         Task task2 = new Task("task2", "task2", Status.NEW);

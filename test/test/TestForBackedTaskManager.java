@@ -1,6 +1,7 @@
 package test;
 
 import main.java.manager.FileBackedTaskManager;
+import main.java.manager.ManagerSaveException;
 import main.java.tasks.EpicTask;
 import main.java.tasks.Status;
 import main.java.tasks.SubTask;
@@ -23,13 +24,13 @@ public class TestForBackedTaskManager {
     }
 
     @BeforeEach()
-    public void setUp() throws ManagerSaveException {
+    public void setUp() {
         manager = new FileBackedTaskManager(Paths.get(""), Paths.get(""));
 
     }
 
     @Test
-    public void checkCreateFile() throws ManagerSaveException {
+    public void checkCreateFile() {
         File file = new File("./src/main/java/manager/StorageOfTasks.cvs");
         file.delete();
         Assertions.assertFalse(file.exists());
@@ -38,7 +39,7 @@ public class TestForBackedTaskManager {
     }
 
     @Test
-    public void checkLoadFromFile() throws ManagerSaveException, IOException {
+    public void checkLoadFromFile() throws IOException {
         Task task1 = new Task("task1", "task1Description", Status.NEW);
         EpicTask task2 = new EpicTask("epicTask1", "epicTaskDescription");
         SubTask task3 = new SubTask(2, "subTask1", "subTask1Description", Status.NEW);
@@ -57,7 +58,7 @@ public class TestForBackedTaskManager {
     }
 
     @Test
-    public void checkHistory() throws ManagerSaveException, IOException {
+    public void checkHistory() throws IOException {
         Task task1 = new Task("task1", "task1Description", Status.NEW);
         EpicTask task2 = new EpicTask("epicTask1", "epicTaskDescription");
         SubTask task3 = new SubTask(2, "subTask1", "subTask1Description", Status.NEW);

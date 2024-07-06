@@ -10,12 +10,11 @@ public class Task {
     TaskType taskType;
 
 
-
     public Task(String name, String description, Status status) {
         this.name = name;
         this.description = description;
         this.status = status;
-        this.taskType  = TaskType.TASK;
+        this.taskType = TaskType.TASK;
     }
 
     public int getId() {
@@ -80,7 +79,7 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status && taskType  == task.taskType;
+        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status && taskType == task.taskType;
     }
 
     @Override
