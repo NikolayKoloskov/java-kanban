@@ -1,15 +1,15 @@
 package test;
 
-import manager.InMemoryHistoryManager;
-import manager.InMemoryTaskManager;
-import manager.Managers;
+import main.java.manager.InMemoryHistoryManager;
+import main.java.manager.InMemoryTaskManager;
+import main.java.manager.Managers;
+import main.java.tasks.EpicTask;
+import main.java.tasks.Status;
+import main.java.tasks.SubTask;
+import main.java.tasks.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tasks.EpicTask;
-import tasks.Status;
-import tasks.SubTask;
-import tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +36,14 @@ public class TestForTask {
     }
 
     @Test
-    void checkEqualsTaskbyId() {
+    void checkEqualsTaskById() {
         Task task = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
         Assertions.assertEquals(task, manager.getTask(1));
     }
 
     @Test
-    void validCreationfOfObjects() {
+    void validCreationOfObjects() {
         Task task = new Task("task1", "task1", Status.NEW);
         EpicTask epicTask = new EpicTask("epicTask1", "epicTask1");
         SubTask subTask = new SubTask(2, "subTask1", "subTask1", Status.NEW);

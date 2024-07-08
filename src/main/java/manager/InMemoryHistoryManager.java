@@ -1,7 +1,8 @@
-package manager;
+package main.java.manager;
 
-import tasks.Node;
-import tasks.Task;
+
+import main.java.tasks.Node;
+import main.java.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;

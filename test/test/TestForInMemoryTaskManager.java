@@ -1,16 +1,14 @@
 package test;
 
-import manager.InMemoryHistoryManager;
-import manager.InMemoryTaskManager;
-import manager.Managers;
-import org.junit.Test;
+import main.java.manager.InMemoryTaskManager;
+import main.java.manager.Managers;
+import main.java.tasks.EpicTask;
+import main.java.tasks.Status;
+import main.java.tasks.SubTask;
+import main.java.tasks.Task;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import tasks.EpicTask;
-import tasks.Status;
-import tasks.SubTask;
-import tasks.Task;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,8 +155,8 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void checkUpdateTask(){
-        Task task  = new Task("task1",  "task1", Status.NEW);
+    public void checkUpdateTask() {
+        Task task = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
         task.update("updated", "updated", Status.IN_PROGRESS);
         Assertions.assertEquals(task, manager.getTask(1));
@@ -167,16 +165,16 @@ public class TestForInMemoryTaskManager {
     }
 
     @Test
-    public void checkDescriptionInTask(){
-        Task task  = new Task("task1",  "task1", Status.NEW);
+    public void checkDescriptionInTask() {
+        Task task = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
         task.setDescription("updated1");
         Assertions.assertEquals("updated1", manager.getTask(1).getDescription());
     }
 
     @Test
-    public void checkStatusInTask(){
-        Task task  = new Task("task1",  "task1", Status.NEW);
+    public void checkStatusInTask() {
+        Task task = new Task("task1", "task1", Status.NEW);
         manager.createTask(task);
         task.setStatus(Status.IN_PROGRESS);
         Assertions.assertEquals(Status.IN_PROGRESS, manager.getTask(1).getStatus());

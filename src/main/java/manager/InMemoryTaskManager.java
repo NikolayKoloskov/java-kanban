@@ -1,9 +1,10 @@
-package manager;
+package main.java.manager;
 
-import tasks.EpicTask;
-import tasks.Status;
-import tasks.SubTask;
-import tasks.Task;
+
+import main.java.tasks.EpicTask;
+import main.java.tasks.Status;
+import main.java.tasks.SubTask;
+import main.java.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +23,10 @@ public class InMemoryTaskManager implements TaskManager {
         epicTasks = new HashMap<>();
         subTasks = new HashMap<>();
         history = Managers.getDefaultHistory();
+    }
+
+    public InMemoryHistoryManager getHistoryManager() {
+        return (InMemoryHistoryManager) history;
     }
 
     @Override
@@ -77,8 +82,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<SubTask> getAllSubTasksByEpicId(int epicId) {
-        ArrayList<SubTask> subTask;
+    public List<SubTask> getAllSubTasksByEpicId(int epicId) {
+        List<SubTask> subTask;
         if (epicTasks.containsKey(epicId)) {
             subTask = epicTasks.get(epicId).getSubTasks();
         } else {
@@ -266,5 +271,38 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return history.getHistory();
+    }
+
+    protected void setTask(Task task) {
+        if (task.getClass().equals(Task.class)) {
+            tasks.put(task.getId(), task);
+        } else if (task.getClass().equals(EpicTask.class)) {
+            epicTasks.put(task.getId(), (EpicTask) task);
+        } else if (task.getClass().equals(SubTask.class)) {
+            SubTask subTask = (SubTask) task;
+            subTasks.put(subTask.getId(), subTask);
+            epicTasks.get(subTask.getEpicId()).addSubtask(subTask);
+        }
+
+    }
+
+    public Map<Integer, Task> getTasks() {
+        return tasks;
+    }
+
+    public Map<Integer, EpicTask> getEpicTasks() {
+        return epicTasks;
+    }
+
+    public Map<Integer, SubTask> getSubTasks() {
+        return subTasks;
+    }
+
+    protected int getId() {
+        return this.id;
+    }
+
+    protected void setId(int id) {
+        this.id = id;
     }
 }

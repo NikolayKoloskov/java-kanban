@@ -1,50 +1,51 @@
-package manager;
+package main.java.manager;
 
-import tasks.EpicTask;
-import tasks.SubTask;
-import tasks.Task;
+
+import main.java.tasks.EpicTask;
+import main.java.tasks.SubTask;
+import main.java.tasks.Task;
 
 import java.util.List;
 
 public interface TaskManager {
-    Task getTask(int id);
+    Task getTask(int id) throws ManagerSaveException;
 
-    EpicTask getEpicTask(int id);
+    EpicTask getEpicTask(int id) throws ManagerSaveException;
 
-    SubTask getSubTask(int id);
+    SubTask getSubTask(int id) throws ManagerSaveException;
 
-    void createTask(Task task);
+    void createTask(Task task) throws ManagerSaveException;
 
-    void createEpicTask(EpicTask epicTask);
+    void createEpicTask(EpicTask epicTask) throws ManagerSaveException;
 
-    void createSubTask(SubTask subTask);
+    void createSubTask(SubTask subTask) throws ManagerSaveException;
 
-    List<SubTask> getAllSubTasksByEpicId(int epicId);
+    List<SubTask> getAllSubTasksByEpicId(int epicId) throws ManagerSaveException;
 
-    void deleteTask(Task task);
+    void deleteTask(Task task) throws ManagerSaveException;
 
-    void deleteEpicTask(EpicTask epicTask);
+    void deleteEpicTask(EpicTask epicTask) throws ManagerSaveException;
 
-    void deleteSubTask(SubTask subTask);
+    void deleteSubTask(SubTask subTask) throws ManagerSaveException;
 
-    void deleteAllTasks();
+    void deleteAllTasks() throws ManagerSaveException;
 
-    void deleteAllEpicTasks();
+    void deleteAllEpicTasks() throws ManagerSaveException;
 
     //Метод удаляет вообще все подзадачи по этому ничего на вход не принимает
-    void deleteAllSubTasks();
+    void deleteAllSubTasks() throws ManagerSaveException;
 
     //Добавил метод для удаления подзадач по эпику
     //сначала удаляю все подзадачи из мапы подзадач - потом чищу эти подзадачи в эпике и обновляю статус у эпика
-    void deleteAllSubTasksInEpic(int epicId);
+    void deleteAllSubTasksInEpic(int epicId) throws ManagerSaveException;
 
-    void updateTask(Task task);
+    void updateTask(Task task) throws ManagerSaveException;
 
-    void updateEpicTask(EpicTask epicTask);
+    void updateEpicTask(EpicTask epicTask) throws ManagerSaveException;
 
-    void updateSubTask(SubTask subTask);
+    void updateSubTask(SubTask subTask) throws ManagerSaveException;
 
-    List<Task> getAllTasks();
+    List<Task> getAllTasks() throws ManagerSaveException;
 
     List<EpicTask> getAllEpicTasks();
 
