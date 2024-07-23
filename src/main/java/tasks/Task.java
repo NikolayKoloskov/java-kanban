@@ -15,8 +15,8 @@ public class Task {
     TaskType taskType;
     private Duration duration;
     private LocalDateTime startTime;
-    public final LocalDateTime DEFAULT_TIME = LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC);
-    public final Duration DEFAULT_DURATION = Duration.ZERO;
+    public static final LocalDateTime DEFAULT_TIME = LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC);
+    public static final Duration DEFAULT_DURATION = Duration.ZERO;
 
     public Task(String name, String description, Status status) {
         this.name = name;
