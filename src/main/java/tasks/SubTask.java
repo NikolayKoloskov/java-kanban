@@ -1,12 +1,22 @@
 package main.java.tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class SubTask extends Task {
     private int epicId;
 
-    public SubTask(int epicId, String name, String description, Status status) {
-        super(name, description, status);
+    public SubTask(int epicId, String name, String desc, Status status) {
+        super(name, desc, status);
         this.epicId = epicId;
-        this.taskType = TaskType.SUB_TASK;
+        this.setTaskType(TaskType.SUB_TASK);
+    }
+
+    public SubTask(int epicId, String name, String description, Status status, LocalDateTime startTime, Duration duration) {
+        super(name, description, status, startTime, duration);
+        this.epicId = epicId;
+        this.setTaskType(TaskType.SUB_TASK);
     }
 
 
@@ -18,6 +28,8 @@ public class SubTask extends Task {
                 "Id='" + super.getId() + "', " +
                 "Name='" + super.getName() + "', " +
                 "Description='" + super.getDescription() + "', " +
+                "StartTime='" + super.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) + "', " +
+                "Duration='" + super.getDuration().toMinutes() + "', " +
                 '}' + "\n";
     }
 

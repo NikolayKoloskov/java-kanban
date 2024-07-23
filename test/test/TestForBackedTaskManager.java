@@ -14,11 +14,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class TestForBackedTaskManager {
     FileBackedTaskManager manager = new FileBackedTaskManager(Paths.get(""), Paths.get(""));
     File file = new File("./src/main/java/manager/StorageOfTasks.cvs");
     Path paths = Paths.get("", String.valueOf(file));
+    LocalDateTime time = LocalDateTime.of(2024, 07, 23, 22, 00);
+    LocalDateTime time2 = LocalDateTime.of(2024, 07, 22, 22, 00);
+    Duration duration = Duration.ofHours(1);
+    Duration duration2 = Duration.ofMinutes(30);
 
     public TestForBackedTaskManager() throws ManagerSaveException {
     }
@@ -42,8 +49,8 @@ public class TestForBackedTaskManager {
     public void checkLoadFromFile() throws IOException {
         Task task1 = new Task("task1", "task1Description", Status.NEW);
         EpicTask task2 = new EpicTask("epicTask1", "epicTaskDescription");
-        SubTask task3 = new SubTask(2, "subTask1", "subTask1Description", Status.NEW);
-        SubTask task4 = new SubTask(2, "subTask2", "subTask2Description", Status.NEW);
+        SubTask task3 = new SubTask(2, "subTask1", "subTask1Description", Status.NEW, time, duration);
+        SubTask task4 = new SubTask(2, "subTask2", "subTask2Description", Status.NEW, time2, duration2);
         manager.createTask(task1);
         manager.createEpicTask(task2);
         manager.createSubTask(task3);
@@ -61,8 +68,8 @@ public class TestForBackedTaskManager {
     public void checkHistory() throws IOException {
         Task task1 = new Task("task1", "task1Description", Status.NEW);
         EpicTask task2 = new EpicTask("epicTask1", "epicTaskDescription");
-        SubTask task3 = new SubTask(2, "subTask1", "subTask1Description", Status.NEW);
-        SubTask task4 = new SubTask(2, "subTask2", "subTask2Description", Status.NEW);
+        SubTask task3 = new SubTask(2, "subTask1", "subTask1Description", Status.NEW, time, duration);
+        SubTask task4 = new SubTask(2, "subTask2", "subTask2Description", Status.NEW, time2, duration2);
         manager.createTask(task1);
         manager.createEpicTask(task2);
         manager.createSubTask(task3);
@@ -71,4 +78,5 @@ public class TestForBackedTaskManager {
         manager2.loadFromFile(file);
         Assertions.assertEquals(manager.getHistory(), manager2.getHistory());
     }
+
 }

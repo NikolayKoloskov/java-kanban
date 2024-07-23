@@ -2,6 +2,7 @@ package test;
 
 import main.java.manager.InMemoryHistoryManager;
 import main.java.manager.InMemoryTaskManager;
+import main.java.manager.ManagerSaveException;
 import main.java.manager.Managers;
 import main.java.tasks.EpicTask;
 import main.java.tasks.Status;
@@ -11,8 +12,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertThrows;
 
 
 public class TestForTask {
@@ -115,5 +120,14 @@ public class TestForTask {
         history.remove(task);
         historyToCompare = historyManager.getHistory();
         Assertions.assertEquals(history, historyToCompare);
+    }
+
+    @Test
+    public void canselCreationOfTask() {
+        Task task = new Task("task1", "task1", Status.NEW, LocalDateTime.of(2024, 1, 1, 1, 0), Duration.ofMinutes(60));
+        manager.createTask(task);
+        Assertions.assertEquals(task, manager.getTask(1));
+        Task task2 = new Task("task2", "task2", Status.NEW, LocalDateTime.of(2024, 1, 1, 1, 0), Duration.ofMinutes(30));
+        assertThrows(ManagerSaveException.class, () -> manager.createTask(task2));
     }
 }
