@@ -70,8 +70,8 @@ public class EpicTask extends Task {
                 }
         );
         Optional<LocalDateTime> firstNonDefaultTime = subTasks.stream()
-                .map(Task::getStartTime).
-                filter(startTime -> startTime != null)
+                .map(Task::getStartTime)
+                .filter(startTime -> startTime != null)
                 .findFirst();
         return firstNonDefaultTime.get();
     }
