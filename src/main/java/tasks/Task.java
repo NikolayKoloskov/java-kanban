@@ -1,9 +1,7 @@
 package main.java.tasks;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
@@ -100,8 +98,7 @@ public class Task {
         } else startTimeToString = "null";
         if (duration != null) {
             durationToString = String.valueOf(duration.toMinutes());
-        }
-        else durationToString = "null";
+        } else durationToString = "null";
         return "Task" + "\n" + "{" +
                 "id='" + id + "', " +
                 "name='" + name + "', " +
