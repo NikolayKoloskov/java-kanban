@@ -24,13 +24,16 @@ public class InMemoryTaskManager implements TaskManager {
         subTasks = new HashMap<>();
         history = new InMemoryHistoryManager();
         tasksSortedByTime = new TreeSet<>((t1, t2) -> {
-            if (t1.getId() == (t2.getId())) {
-                return 0;
-            } else if (t1.getStartTime().isBefore(t2.getStartTime()) || t1.getStartTime().isEqual(t2.getStartTime())) {
-                return 1;
-            } else {
-                return -1;
+            if (t1.getStartTime() != null || t2.getStartTime() != null) {
+                if (t1.getId() == (t2.getId())) {
+                    return 0;
+                } else if (t1.getStartTime().isBefore(t2.getStartTime())) {
+                    return 1;
+                } else {
+                    return -1;
+                }
             }
+            return -1;
         });
     }
 
@@ -39,16 +42,19 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private boolean checkTimeIsFree(Task task) {
-        return tasksSortedByTime.stream().filter(task1 -> task1.getId() != task.getId())
-                .anyMatch(t -> ((t.getStartTime().isBefore(task.getEndTime())
-                        & t.getStartTime().isAfter(task.getStartTime()))) ||
-                        (t.getEndTime().isAfter(task.getStartTime()) & t.getEndTime().isBefore(task.getEndTime())) ||
+        if (task.getStartTime() == null) {
+            return false;
+        } else return tasksSortedByTime.stream().filter(task1 -> task1.getId() != task.getId())
+                .anyMatch(t -> (
+                        (t.getStartTime().isBefore(task.getEndTime()) & t.getEndTime().isAfter(task.getEndTime()))) ||
+                        (t.getEndTime().isAfter(task.getStartTime()) & t.getStartTime().isBefore(task.getStartTime())) ||
                         (t.getStartTime().isBefore(task.getStartTime()) & t.getEndTime().isAfter(task.getEndTime())) ||
+                        (t.getStartTime().isAfter(task.getStartTime()) & t.getEndTime().isBefore(task.getEndTime())) ||
                         (t.getStartTime().isEqual(task.getStartTime()) || (t.getEndTime().isEqual(task.getEndTime()))));
     }
 
     public void addToSortedTasks(Task task) {
-        if (task.getStartTime() != task.getDEFAULT_TIME()) {
+        if (task.getStartTime() != null) {
             if (!checkTimeIsFree(task)) {
                 if (!tasksSortedByTime.contains(task)) {
                     tasksSortedByTime.add(task);
@@ -64,25 +70,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     public List<Task> getPrioritizedTasks() {
         return tasksSortedByTime.stream().toList();
-    }
-
-    public void setStartTimeAndDuration(LocalDateTime startTime, Duration duration, int id) {
-        if (tasks.containsKey(id)) {
-            Task task = tasks.get(id);
-            task.setStartTime(startTime);
-            task.setDuration(duration);
-            tasks.put(id, task);
-            addToSortedTasks(task);
-        } else if (subTasks.containsKey(id)) {
-            SubTask subTask = subTasks.get(id);
-            EpicTask epicTask = epicTasks.get(subTask.getEpicId());
-            subTask.setStartTime(startTime);
-            subTask.setDuration(duration);
-            subTasks.put(id, subTask);
-            epicTask.setEpicTime();
-            epicTask.setDuration();
-            addToSortedTasks(subTask);
-        }
     }
 
     @Override

@@ -145,8 +145,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     taskToReturn.setId(Integer.parseInt(task[0]));
                     taskToReturn.setTaskType(TaskType.valueOf(task[1]));
                     setIdInManager(taskToReturn);
-                    taskToReturn.setStartTime(LocalDateTime.parse(task[5], DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
-                    taskToReturn.setDuration(Duration.ofMinutes(parseLong(task[6])));
+                    if (task[5].equals("null")) {
+                        taskToReturn.setStartTime(null);
+                    } else {
+                        taskToReturn.setStartTime(LocalDateTime.parse(task[5], DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
+                    }
+                    if (task[6].equals("null")) {
+                        taskToReturn.setDuration(null);
+                    } else {
+                        taskToReturn.setDuration(Duration.ofMinutes(parseLong(task[6])));
+                    }
                     return taskToReturn;
                 case EPIC_TASK:
                     status = Status.valueOf(task[3]);
@@ -163,8 +171,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     taskToReturn = new SubTask(Integer.parseInt(task[5]), task[2], task[4], status);
                     taskToReturn.setId(Integer.parseInt(task[0]));
                     taskToReturn.setTaskType(TaskType.valueOf(task[1]));
-                    taskToReturn.setStartTime(LocalDateTime.parse(task[6], DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
-                    taskToReturn.setDuration(Duration.ofMinutes(parseLong(task[7])));
+                    if (task[6].equals("null")) {
+                        taskToReturn.setStartTime(null);
+                    } else {
+                        taskToReturn.setStartTime(LocalDateTime.parse(task[6], DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
+                    }
+                    if (task[7].equals("null")) {
+                        taskToReturn.setDuration(null);
+                    } else {
+                        taskToReturn.setDuration(Duration.ofMinutes(parseLong(task[7])));
+                    }
                     setIdInManager(taskToReturn);
                     return taskToReturn;
             }
@@ -209,37 +225,35 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private String taskToString(Task task) throws IllegalArgumentException, ManagerSaveException {
         try {
             if (task.getTaskType() != null) {
+                String time;
+                String duration;
                 switch (task.getTaskType()) {
                     case TaskType.TASK:
-                        return String.format("%d,%S,%s,%S,%s,%s,%s",
-                                task.getId(),
-                                task.getTaskType(),
-                                task.getName(),
-                                task.getStatus(),
-                                task.getDescription(),
-                                task.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")),
-                                task.getDuration().toMinutes());
+                        if (task.getStartTime() != null) {
+                            time = task.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+                        } else time = "null";
+                        if (task.getDuration() != null) {
+                            duration = String.valueOf(task.getDuration().toMinutes());
+                        } else duration = "null";
+                        return String.format("%d,%S,%s,%S,%s,%s,%s", task.getId(), task.getTaskType(), task.getName(), task.getStatus(), task.getDescription(), time, duration);
                     case TaskType.EPIC_TASK:
                         EpicTask epicTask = (EpicTask) task;
-                        return String.format("%d,%S,%s,%S,%s,%s,%s",
-                                epicTask.getId(),
-                                task.getTaskType(),
-                                epicTask.getName(),
-                                epicTask.getStatus(),
-                                epicTask.getDescription(),
-                                epicTask.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")),
-                                epicTask.getDuration().toMinutes());
+                        if (epicTask.getStartTime() != null) {
+                            time = epicTask.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+                        } else time = "null";
+                        if (epicTask.getDuration() != null) {
+                            duration = String.valueOf(epicTask.getDuration().toMinutes());
+                        } else duration = "null";
+                        return String.format("%d,%S,%s,%S,%s,%s,%s", epicTask.getId(), task.getTaskType(), epicTask.getName(), epicTask.getStatus(), epicTask.getDescription(), time, duration);
                     case TaskType.SUB_TASK:
                         SubTask subTask = (SubTask) task;
-                        return String.format("%d,%S,%s,%S,%s,%s,%s,%s",
-                                subTask.getId(),
-                                subTask.getTaskType(),
-                                subTask.getName(),
-                                subTask.getStatus(),
-                                subTask.getDescription(),
-                                subTask.getEpicId(),
-                                subTask.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")),
-                                subTask.getDuration().toMinutes());
+                        if (subTask.getStartTime() != null) {
+                            time = subTask.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+                        } else time = "null";
+                        if (subTask.getDuration() != null) {
+                            duration = String.valueOf(subTask.getDuration().toMinutes());
+                        } else duration = "null";
+                        return String.format("%d,%S,%s,%S,%s,%s,%s,%s", subTask.getId(), subTask.getTaskType(), subTask.getName(), subTask.getStatus(), subTask.getDescription(), subTask.getEpicId(), time, duration);
                 }
             }
         } catch (IllegalArgumentException e) {

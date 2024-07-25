@@ -16,14 +16,14 @@ public class EpicTask extends Task {
         super(name, description, Status.NEW);
         this.subTasks = new ArrayList<>();
         this.taskType = TaskType.EPIC_TASK;
-        this.epicTime = DEFAULT_TIME;
-        this.epicDuration = DEFAULT_DURATION;
+        this.epicTime = null;
+        this.epicDuration = null;
     }
 
     public void setEpicTime() {
         if (subTasks.isEmpty()) {
-            this.epicTime = DEFAULT_TIME;
-            super.setStartTime(DEFAULT_TIME);
+            this.epicTime = null;
+            super.setStartTime(null);
         } else {
             this.epicTime = getStartTime();
             super.setStartTime(epicTime);
@@ -32,8 +32,8 @@ public class EpicTask extends Task {
 
     public void setDuration() {
         if (subTasks.isEmpty()) {
-            this.epicDuration = DEFAULT_DURATION;
-            super.setDuration(DEFAULT_DURATION);
+            this.epicDuration = null;
+            super.setDuration(null);
         } else {
             this.epicDuration = getDuration();
             super.setDuration(epicDuration);
@@ -44,7 +44,9 @@ public class EpicTask extends Task {
     public Duration getDuration() {
         Duration generalDuration = Duration.ofMinutes(0);
         for (SubTask sub : subTasks) {
-            generalDuration = generalDuration.plus(sub.getDuration());
+            if (sub.getStartTime() == null) {
+                generalDuration = generalDuration.plus(Duration.ZERO);
+            } else generalDuration = generalDuration.plus(sub.getDuration());
         }
         return generalDuration;
     }
@@ -52,7 +54,9 @@ public class EpicTask extends Task {
     @Override
     public LocalDateTime getStartTime() {
         if (subTasks.isEmpty()) {
-            return DEFAULT_TIME;
+            return null;
+        } else if (subTasks.stream().allMatch(task -> task.getStartTime() == null)) {
+            return null;
         }
         subTasks.sort((task1, task2) -> {
                     if (task1.getStartTime().isAfter(task2.getStartTime())) {
@@ -66,10 +70,12 @@ public class EpicTask extends Task {
                 }
         );
         Optional<LocalDateTime> firstNonDefaultTime = subTasks.stream()
-                .map(Task::getStartTime).filter(startTime -> startTime != DEFAULT_TIME)
+                .map(Task::getStartTime).
+                filter(startTime -> startTime != null)
                 .findFirst();
-        return firstNonDefaultTime.orElse(DEFAULT_TIME);
+        return firstNonDefaultTime.get();
     }
+
 
     public void addSubtask(SubTask task) {
         if (!subTasks.contains(task)) {
@@ -124,13 +130,21 @@ public class EpicTask extends Task {
 
     @Override
     public String toString() {
+        String time;
+        String duration;
+        if (epicTime == null) {
+            time = "null";
+        } else time = epicTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+        if (epicDuration == null) {
+            duration = "null";
+        } else duration = String.valueOf(epicDuration.toMinutes());
         return "EpicTask" + "\n" + "{" +
                 "id='" + getId() + "', " +
                 "status='" + getStatus() + "', " +
                 "name='" + getName() + "', " +
                 "description='" + getDescription() + "', " +
-                "StartTime='" + epicTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) + "', " +
-                "Duration='" + epicDuration.toMinutes() + "', " +
+                "StartTime='" + time + "', " +
+                "Duration='" + duration + "', " +
                 "subtasks'=" + subTasks + "', " +
                 '}' + "\n";
     }
