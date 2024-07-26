@@ -11,6 +11,7 @@ public class EpicTask extends Task {
     private ArrayList<SubTask> subTasks;
     LocalDateTime epicTime;
     Duration epicDuration;
+    LocalDateTime epicEndTime;
 
     public EpicTask(String name, String description) {
         super(name, description, Status.NEW);
@@ -76,6 +77,31 @@ public class EpicTask extends Task {
         return firstNonDefaultTime.get();
     }
 
+    @Override
+    public LocalDateTime getEndTime() {
+        if (subTasks.isEmpty()) {
+            return null;
+        } else if (subTasks.stream().allMatch(task -> task.getEndTime() == null)) {
+            return null;
+        }
+        subTasks.sort((task1, task2) -> {
+            if (task1.getEndTime().isAfter(task2.getEndTime())) {
+                return 1;
+            }
+            if (task1.getEndTime().isBefore(task2.getEndTime())) {
+                return -1;
+            } else {
+                return 0;
+            }
+
+        });
+        Optional<LocalDateTime> lastTime = subTasks.stream()
+                .map(task -> task.getStartTime().plus(task.getDuration()))
+                .max(LocalDateTime::compareTo);
+        this.epicEndTime = lastTime.get();
+        return lastTime.get();
+    }
+
 
     public void addSubtask(SubTask task) {
         if (!subTasks.contains(task)) {
@@ -96,6 +122,7 @@ public class EpicTask extends Task {
                     subTasks.remove(task);
                     setEpicTime();
                     setDuration();
+                    getEndTime();
                 } else {
                     System.out.println("Задача не найдена");
                 }
@@ -110,6 +137,8 @@ public class EpicTask extends Task {
             subTasks.clear();
             setEpicTime();
             setDuration();
+            getEndTime();
+
         }
     }
 
@@ -146,6 +175,7 @@ public class EpicTask extends Task {
                 "StartTime='" + time + "', " +
                 "Duration='" + duration + "', " +
                 "subtasks'=" + subTasks + "', " +
+                "endTime'=" + getEndTime().toString() +
                 '}' + "\n";
     }
 }

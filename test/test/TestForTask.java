@@ -1,9 +1,6 @@
 package test;
 
-import main.java.manager.InMemoryHistoryManager;
-import main.java.manager.InMemoryTaskManager;
-import main.java.manager.ManagerSaveException;
-import main.java.manager.Managers;
+import main.java.manager.*;
 import main.java.tasks.EpicTask;
 import main.java.tasks.Status;
 import main.java.tasks.SubTask;
@@ -128,6 +125,6 @@ public class TestForTask {
         manager.createTask(task);
         Assertions.assertEquals(task, manager.getTask(1));
         Task task2 = new Task("task2", "task2", Status.NEW, LocalDateTime.of(2024, 1, 1, 1, 0), Duration.ofMinutes(30));
-        assertThrows(ManagerSaveException.class, () -> manager.createTask(task2));
+        assertThrows(ManagerSortedSaveException.class, () -> manager.createTask(task2));
     }
 }

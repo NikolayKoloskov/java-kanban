@@ -61,7 +61,7 @@ public class InMemoryTaskManager implements TaskManager {
                     tasksSortedByTime.add(task);
                 }
             } else {
-                throw new ManagerSaveException("Временной интервал уже занят другой задачей");
+                throw new ManagerSortedSaveException("Временной интервал уже занят другой задачей");
             }
         }
     }
@@ -108,6 +108,7 @@ public class InMemoryTaskManager implements TaskManager {
         epicTask.setId(id);
         epicTasks.put(id, epicTask);
         autoSetEpicStatus(id);
+        epicTask.getEndTime();
         id++;
     }
 
@@ -121,6 +122,7 @@ public class InMemoryTaskManager implements TaskManager {
             subTasks.put(id, subTask);
             autoSetEpicStatus(mainId);
             addToSortedTasks(subTask);
+            epicTask.getEndTime();
             id++;
         }
     }
@@ -197,6 +199,7 @@ public class InMemoryTaskManager implements TaskManager {
             tasksSortedByTime.remove(subTask);
             epicTask.setEpicTime();
             epicTask.setDuration();
+            epicTask.getEndTime();
             history.remove(idDelete);
         }
     }
@@ -229,6 +232,7 @@ public class InMemoryTaskManager implements TaskManager {
         for (EpicTask epicTask : epicTasks.values()) {
             epicTask.removeAllSubtasks();
             autoSetEpicStatus(epicTask.getId());
+
         }
         for (Integer subTask : subTasks.keySet()) {
             history.remove(subTask);
@@ -256,8 +260,7 @@ public class InMemoryTaskManager implements TaskManager {
         int id = task.getId();
         if (tasks.containsKey(id)) {
             tasks.put(id, task);
-            tasksSortedByTime.remove(task);
-            tasksSortedByTime.add(task);
+            addToSortedTasks(task);
         }
     }
 
@@ -268,9 +271,10 @@ public class InMemoryTaskManager implements TaskManager {
             EpicTask epicTask1 = epicTasks.get(id);
             epicTask1.setName(epicTask.getName());
             epicTask1.setDescription(epicTask.getDescription());
+            epicTask1.setEpicTime();
+            epicTask1.setDuration();
+            epicTask1.getEndTime();
             autoSetEpicStatus(id);
-            tasksSortedByTime.remove(epicTask);
-            tasksSortedByTime.add(epicTask);
         }
     }
 
@@ -281,12 +285,15 @@ public class InMemoryTaskManager implements TaskManager {
         if ((subTasks.containsKey(id)) && (epicTasks.containsKey(mainId)) && (subTasks.get(id).getEpicId() == subTask.getEpicId())) {
             SubTask subTaskToUpdate = subTasks.get(id);
             tasksSortedByTime.remove(subTask);
-            subTaskToUpdate.update(subTask.getName(), subTask.getDescription(), subTask.getStatus());
+            subTaskToUpdate.update(subTask.getName(), subTask.getDescription(), subTask.getStatus(), subTask.getStartTime(), subTask.getDuration());
             EpicTask epicTask = epicTasks.get(mainId);
+            epicTask.setEpicTime();
+            epicTask.setDuration();
+            epicTask.getEndTime();
             SubTask subTask1 = epicTask.getSubTask(id);
-            subTask1.update(subTask.getName(), subTask.getDescription(), subTask.getStatus());
+            subTask1.update(subTask.getName(), subTask.getDescription(), subTask.getStatus(), subTask.getStartTime(), subTask.getDuration());
             autoSetEpicStatus(mainId);
-
+            addToSortedTasks(subTask1);
         }
     }
 
@@ -328,12 +335,14 @@ public class InMemoryTaskManager implements TaskManager {
     protected void setTask(Task task) {
         if (task.getClass().equals(Task.class)) {
             tasks.put(task.getId(), task);
+            addToSortedTasks(task);
         } else if (task.getClass().equals(EpicTask.class)) {
             epicTasks.put(task.getId(), (EpicTask) task);
         } else if (task.getClass().equals(SubTask.class)) {
             SubTask subTask = (SubTask) task;
             subTasks.put(subTask.getId(), subTask);
             epicTasks.get(subTask.getEpicId()).addSubtask(subTask);
+            addToSortedTasks(task);
         }
 
     }

@@ -325,6 +325,34 @@ public class TestForInMemoryTaskManager {
         manager.updateTask(task2);
         Assertions.assertEquals(task2, manager.getTask(1));
         Assertions.assertEquals(List.of(task2), manager.getPrioritizedTasks());
+    }
+    @Test
+    public void updateSubTaskTest() {
+        EpicTask epicTask = new EpicTask("epic1", "descEpic1");
+        manager.createEpicTask(epicTask);
 
+        SubTask subTask = new SubTask(1,"subtask2", "subtask2", Status.NEW, LocalDateTime.of(2024, 1, 2, 1, 0), Duration.ofMinutes(60));
+        manager.createSubTask(subTask);
+        subTask.setName("ChangedName");
+        subTask.setDescription("ChangedDesc");
+        subTask.setStatus(Status.IN_PROGRESS);
+        subTask.setStartTime(LocalDateTime.of(2024, 2, 2, 1, 0));
+        subTask.setDuration(Duration.ofHours(60));
+        Assertions.assertNotEquals(subTask, manager.getPrioritizedTasks());
+        manager.updateSubTask(subTask);
+        Assertions.assertEquals(List.of(subTask), manager.getPrioritizedTasks());
+    }
+
+    @Test
+    public void getEndTimeEpicTest(){
+        EpicTask epicTask = new EpicTask("epic1", "descEpic1");
+        manager.createEpicTask(epicTask);
+        SubTask subTask = new SubTask(1,"subtask1", "subtask1", Status.NEW, LocalDateTime.of(2024, 1, 2, 1, 0), Duration.ofMinutes(60));
+        manager.createSubTask(subTask);
+        SubTask subTask2 = new SubTask(1,"subtask2", "subtask2", Status.NEW, LocalDateTime.of(2024, 1, 2, 3, 0), Duration.ofMinutes(60));
+        manager.createSubTask(subTask2);
+        SubTask subTask3 = new SubTask(1,"subtask3", "subtask3", Status.NEW, LocalDateTime.of(2024, 2, 2, 2, 0), Duration.ofMinutes(0));
+        manager.createSubTask(subTask3);
+        Assertions.assertEquals(LocalDateTime.of(2024, 2, 2, 2, 0), epicTask.getEndTime());
     }
 }
