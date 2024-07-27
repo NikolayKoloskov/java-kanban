@@ -278,7 +278,6 @@ public class InMemoryTaskManager implements TaskManager {
         int mainId = subTask.getEpicId();
         if ((subTasks.containsKey(id)) && (epicTasks.containsKey(mainId)) && (subTasks.get(id).getEpicId() == subTask.getEpicId())) {
             SubTask subTaskToUpdate = subTasks.get(id);
-            tasksSortedByTime.remove(subTask);
             subTaskToUpdate.update(subTask.getName(), subTask.getDescription(), subTask.getStatus(), subTask.getStartTime(), subTask.getDuration());
             EpicTask epicTask = epicTasks.get(mainId);
             SubTask subTask1 = epicTask.getSubTask(id);
