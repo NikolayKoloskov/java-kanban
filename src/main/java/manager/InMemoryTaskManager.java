@@ -160,6 +160,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
             epicTask.setEpicTime();
             epicTask.setDuration();
+            epicTask.getEndTime();
         }
     }
 
@@ -184,7 +185,6 @@ public class InMemoryTaskManager implements TaskManager {
             }
             history.remove(idDelete);
             epicTasks.remove(idDelete);
-            tasksSortedByTime.remove(epicTask);
         }
     }
 
@@ -197,9 +197,6 @@ public class InMemoryTaskManager implements TaskManager {
             subTasks.remove(idDelete);
             autoSetEpicStatus(epicTask.getId());
             tasksSortedByTime.remove(subTask);
-            epicTask.setEpicTime();
-            epicTask.setDuration();
-            epicTask.getEndTime();
             history.remove(idDelete);
         }
     }
@@ -248,7 +245,7 @@ public class InMemoryTaskManager implements TaskManager {
             for (SubTask subTask : epicTask.getSubTasks()) {
                 subTasks.remove(subTask.getId());
                 history.remove(subTask.getId());
-                tasksSortedByTime.remove(subTasks.get(subTask));
+                tasksSortedByTime.remove(subTask);
             }
             epicTask.removeAllSubtasks();
             autoSetEpicStatus(epicTask.getId());
@@ -271,9 +268,6 @@ public class InMemoryTaskManager implements TaskManager {
             EpicTask epicTask1 = epicTasks.get(id);
             epicTask1.setName(epicTask.getName());
             epicTask1.setDescription(epicTask.getDescription());
-            epicTask1.setEpicTime();
-            epicTask1.setDuration();
-            epicTask1.getEndTime();
             autoSetEpicStatus(id);
         }
     }
@@ -287,9 +281,6 @@ public class InMemoryTaskManager implements TaskManager {
             tasksSortedByTime.remove(subTask);
             subTaskToUpdate.update(subTask.getName(), subTask.getDescription(), subTask.getStatus(), subTask.getStartTime(), subTask.getDuration());
             EpicTask epicTask = epicTasks.get(mainId);
-            epicTask.setEpicTime();
-            epicTask.setDuration();
-            epicTask.getEndTime();
             SubTask subTask1 = epicTask.getSubTask(id);
             subTask1.update(subTask.getName(), subTask.getDescription(), subTask.getStatus(), subTask.getStartTime(), subTask.getDuration());
             autoSetEpicStatus(mainId);

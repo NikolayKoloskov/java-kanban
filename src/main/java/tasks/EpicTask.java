@@ -55,8 +55,10 @@ public class EpicTask extends Task {
     @Override
     public LocalDateTime getStartTime() {
         if (subTasks.isEmpty()) {
+            this.epicTime = null;
             return null;
         } else if (subTasks.stream().allMatch(task -> task.getStartTime() == null)) {
+            this.epicTime = null;
             return null;
         }
         subTasks.sort((task1, task2) -> {
@@ -80,8 +82,10 @@ public class EpicTask extends Task {
     @Override
     public LocalDateTime getEndTime() {
         if (subTasks.isEmpty()) {
+            this.epicEndTime = null;
             return null;
         } else if (subTasks.stream().allMatch(task -> task.getEndTime() == null)) {
+            this.epicEndTime = null;
             return null;
         }
         subTasks.sort((task1, task2) -> {
@@ -108,6 +112,7 @@ public class EpicTask extends Task {
             subTasks.add(task);
             setEpicTime();
             setDuration();
+            getEndTime();
         } else {
             System.out.println("Задача уже существует");
         }
