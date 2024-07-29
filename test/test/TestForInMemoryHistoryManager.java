@@ -101,4 +101,6 @@ public class TestForInMemoryHistoryManager {
         historyToCompare = historyManager.getHistory();
         Assertions.assertEquals(history, historyToCompare);
     }
+
+
 }
