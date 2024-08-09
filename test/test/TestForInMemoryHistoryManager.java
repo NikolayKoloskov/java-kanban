@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +20,12 @@ public class TestForInMemoryHistoryManager {
     Managers managers = new Managers();
     InMemoryTaskManager manager = (InMemoryTaskManager) managers.getDefault();
 
+    public TestForInMemoryHistoryManager() throws IOException, InterruptedException {
+    }
+
 
     @BeforeEach
-    void init() {
+    void init() throws IOException, InterruptedException {
         Managers managers = new Managers();
         InMemoryTaskManager manager = (InMemoryTaskManager) managers.getDefault();
 

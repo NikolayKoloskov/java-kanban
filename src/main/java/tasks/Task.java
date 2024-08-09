@@ -1,8 +1,9 @@
 package main.java.tasks;
 
+import main.java.manager.ManagerSaveException;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Task {
@@ -89,29 +90,32 @@ public class Task {
         this.taskType = taskType;
     }
 
-    @Override
-    public String toString() {
-        String startTimeToString;
-        String durationToString;
-        if (startTime != null) {
-            startTimeToString = startTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
-        } else startTimeToString = "null";
-        if (duration != null) {
-            durationToString = String.valueOf(duration.toMinutes());
-        } else durationToString = "null";
-        return "Task" + "\n" + "{" +
-                "id='" + id + "', " +
-                "name='" + name + "', " +
-                "description='" + description + "', " +
-                "status='" + status + "', " +
-                "StartTime='" + startTimeToString + "', " +
-                "Duration='" + durationToString + "', " +
-
-                "}" + "\n";
-    }
+//    @Override
+//    public String toString() {
+//        String startTimeToString;
+//        String durationToString;
+//        if (startTime != null) {
+//            startTimeToString = startTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+//        } else startTimeToString = "null";
+//        if (duration != null) {
+//            durationToString = String.valueOf(duration.toMinutes());
+//        } else durationToString = "null";
+//        return "Task" + "\n" + "{" +
+//                "id='" + id + "', " +
+//                "name='" + name + "', " +
+//                "description='" + description + "', " +
+//                "status='" + status + "', " +
+//                "StartTime='" + startTimeToString + "', " +
+//                "Duration='" + durationToString + "', " +
+//                "}" + "\n";
+//    }
 
     public void setId(int id) {
-        this.id = id;
+        if (id < 0) {
+            throw new ManagerSaveException("Id должен быть больше 0, " + id);
+        } else {
+            this.id = id;
+        }
     }
 
     @Override
@@ -119,9 +123,7 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description)
-                && status == task.status && taskType == task.taskType
-                && Objects.equals(startTime, task.startTime) && Objects.equals(duration, task.duration);
+        return id == task.id;
     }
 
     @Override
