@@ -42,12 +42,10 @@ public class TaskHandler extends DefaultHandler {
             case "GET":
 
                 //Подразумевает вызов по эндпоинту /tasks
-
+                //Подразумевает вызов по эндпоинту /tasks?id= или /tasks/task?id=
                 if (pathParts.length == 2 && query == null) {
                     handleGetAllTasks(exchange);
-                }
-                //Подразумевает вызов по эндпоинту /tasks?id= или /tasks/task?id=
-                else if (pathParts.length >= 2 && query != null & query.split("=").length > 1) {
+                } else if (pathParts.length >= 2 && query != null & query.split("=").length > 1) {
                     int id = Integer.parseInt(query.split("=")[1]);
                     Task task = httpTaskManager.getTask(id);
                     String jsonTask = gson.toJson(task);
