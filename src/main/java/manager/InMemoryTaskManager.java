@@ -96,10 +96,22 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createTask(Task task) {
-        task.setId(id);
-        tasks.put(id, task);
-        addToSortedTasks(task);
-        id++;
+        if (tasks.containsKey(task.getId()) || epicTasks.containsKey(task.getId()) || subTasks.containsKey(task.getId())) {
+            throw new ManagerSaveException("Задача с таким id уже существует - " + task.getId());
+        } else {
+            if (task.getId() == 0) {
+                task.setId(id);
+                tasks.put(id, task);
+            } else {
+                task.setId(task.getId());
+                tasks.put(task.getId(), task);
+            }
+            addToSortedTasks(task);
+            while (!idIsFree(id)) {
+                id++;
+            }
+
+        }
     }
 
 
@@ -253,22 +265,37 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Task task) {
+    public void updateTask(Task task) throws ManagerSaveException {
         int id = task.getId();
-        if (tasks.containsKey(id)) {
-            tasks.put(id, task);
-            addToSortedTasks(task);
+        if (epicTasks.containsKey(id) | subTasks.containsKey(id)) {
+            throw new ManagerSaveException("Задача с таким id не существует - " + id);
+        } else {
+            if (tasks.containsKey(id)) {
+                tasks.put(id, task);
+                addToSortedTasks(task);
+            }
         }
     }
 
     @Override
     public void updateEpicTask(EpicTask epicTask) {
         int id = epicTask.getId();
-        if (epicTasks.containsKey(id)) {
+        if (epicTasks.containsKey(id) & !subTasks.containsKey(id) & !tasks.containsKey(id)) {
             EpicTask epicTask1 = epicTasks.get(id);
             epicTask1.setName(epicTask.getName());
             epicTask1.setDescription(epicTask.getDescription());
+            ArrayList<SubTask> subTasksInside = epicTask.getSubTasks();
+            for (SubTask subTask1 : subTasksInside) {
+                epicTask1.addSubtask(subTask1);
+                if (!subTasks.containsKey(subTask1.getId())) {
+                    subTasks.put(subTask1.getId(), subTask1);
+                    addToSortedTasks(subTask1);
+                }
+            }
+            epicTask1.setSubTasks(epicTask.getSubTasks());
             autoSetEpicStatus(id);
+        } else {
+            throw new ManagerSaveException("Задача с таким id уже существует - " + id);
         }
     }
 
@@ -355,5 +382,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     protected void setId(int id) {
         this.id = id;
+    }
+
+    protected boolean idIsFree(int id) {
+        return !tasks.containsKey(id) & !epicTasks.containsKey(id) & !subTasks.containsKey(id);
     }
 }

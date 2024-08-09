@@ -2,7 +2,6 @@ package main.java.tasks;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class SubTask extends Task {
     private int epicId;
@@ -20,18 +19,18 @@ public class SubTask extends Task {
     }
 
 
-    @Override
-    public String toString() {
-        return "SubTask" + "\n" + "{" +
-                "EpicId =" + epicId + ", " +
-                "Tasks.Status='" + super.getStatus() + "', " +
-                "Id='" + super.getId() + "', " +
-                "Name='" + super.getName() + "', " +
-                "Description='" + super.getDescription() + "', " +
-                "StartTime='" + super.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) + "', " +
-                "Duration='" + super.getDuration().toMinutes() + "', " +
-                '}' + "\n";
-    }
+//    @Override
+//    public String toString() {
+//        return "SubTask" + "\n" + "{" +
+//                "EpicId =" + epicId + ", " +
+//                "Tasks.Status='" + super.getStatus() + "', " +
+//                "Id='" + super.getId() + "', " +
+//                "Name='" + super.getName() + "', " +
+//                "Description='" + super.getDescription() + "', " +
+//                "StartTime='" + super.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) + "', " +
+//                "Duration='" + super.getDuration().toMinutes() + "', " +
+//                '}' + "\n";
+//    }
 
     public void setEpicId(int epicId) {
         this.epicId = epicId;
@@ -40,5 +39,6 @@ public class SubTask extends Task {
     public int getEpicId() {
         return epicId;
     }
+
 
 }
