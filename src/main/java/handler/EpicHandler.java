@@ -96,7 +96,6 @@ public class EpicHandler extends DefaultHandler {
                         if (httpTaskManager.getEpicTasks().containsKey(epicTask.getId())) {
                             try {
                                 httpTaskManager.updateEpicTask(epicTask);
-                                writeResponse(exchange, "Эпик сохранен", 201);
                                 break;
                             } catch (ManagerSortedSaveException e) {
                                 writeResponse(exchange, e.getMessage(), 406);
@@ -109,9 +108,10 @@ public class EpicHandler extends DefaultHandler {
                                 writeResponse(exchange, e.getMessage(), 406);
                                 break;
                             }
+
                         }
                         if (epicTask.equals(httpTaskManager.getEpicTask(epicTask.getId()))) {
-                            writeResponse(exchange, "Эпик сохранен", 201);
+                            writeResponse(exchange, "Эпик сохранен" + epicTask.getId(), 201);
                             break;
                         }
                         break;

@@ -73,7 +73,7 @@ public class TaskHandler extends DefaultHandler {
                             }
                         }
                         if (task.equals(httpTaskManager.getTask(task.getId()))) {
-                            writeResponse(exchange, "Задача сохранена", 201);
+                            writeResponse(exchange, "Задача сохранена c id: " + task.getId(), 201);
                             break;
                         }
                         break;

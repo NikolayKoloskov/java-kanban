@@ -84,7 +84,7 @@ public class SubTaskHandler extends DefaultHandler {
                         if (httpTaskManager.getSubTasks().containsKey(subTask.getId())) {
                             try {
                                 httpTaskManager.updateSubTask(subTask);
-                                writeResponse(exchange, "Задача сохранена", 201);
+                                writeResponse(exchange, "Задача сохранена c id: " + subTask.getId(), 201);
                                 break;
                             } catch (ManagerSortedSaveException e) {
                                 writeResponse(exchange, e.getMessage(), 406);
@@ -99,7 +99,7 @@ public class SubTaskHandler extends DefaultHandler {
                             }
                         }
                         if (subTask.equals(httpTaskManager.getTask(subTask.getId()))) {
-                            writeResponse(exchange, "Задача сохранена", 201);
+                            writeResponse(exchange, "Задача сохранена c id: " + subTask.getId(), 201);
                             break;
                         }
                         break;
