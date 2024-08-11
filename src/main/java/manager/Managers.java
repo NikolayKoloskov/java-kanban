@@ -1,9 +1,11 @@
 package main.java.manager;
 
+import java.io.IOException;
+
 public class Managers {
 
-    public TaskManager getDefault() {
-        return new InMemoryTaskManager();
+    public static HttpTaskManager getDefault() throws IOException, InterruptedException {
+        return new HttpTaskManager();
     }
 
     public static HistoryManager getDefaultHistory() {

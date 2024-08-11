@@ -2,7 +2,6 @@ package main.java.tasks;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -113,8 +112,6 @@ public class EpicTask extends Task {
             setEpicTime();
             setDuration();
             getEndTime();
-        } else {
-            System.out.println("Задача уже существует");
         }
     }
 
@@ -151,6 +148,13 @@ public class EpicTask extends Task {
         return subTasks;
     }
 
+    public void setSubTasks(ArrayList<SubTask> subTasks) {
+        this.subTasks = subTasks;
+        setEpicTime();
+        setDuration();
+        getEndTime();
+    }
+
     public SubTask getSubTask(int id) {
         SubTask subTask = null;
         for (int i = 0; i < subTasks.size(); i++) {
@@ -162,25 +166,25 @@ public class EpicTask extends Task {
         return subTask;
     }
 
-    @Override
-    public String toString() {
-        String time;
-        String duration;
-        if (epicTime == null) {
-            time = "null";
-        } else time = epicTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
-        if (epicDuration == null) {
-            duration = "null";
-        } else duration = String.valueOf(epicDuration.toMinutes());
-        return "EpicTask" + "\n" + "{" +
-                "id='" + getId() + "', " +
-                "status='" + getStatus() + "', " +
-                "name='" + getName() + "', " +
-                "description='" + getDescription() + "', " +
-                "StartTime='" + time + "', " +
-                "Duration='" + duration + "', " +
-                "subtasks'=" + subTasks + "', " +
-                "endTime'=" + getEndTime().toString() +
-                '}' + "\n";
-    }
+//    @Override
+//    public String toString() {
+//        String time;
+//        String duration;
+//        if (epicTime == null) {
+//            time = "null";
+//        } else time = epicTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+//        if (epicDuration == null) {
+//            duration = "null";
+//        } else duration = String.valueOf(epicDuration.toMinutes());
+//        return "EpicTask" + "\n" + "{" +
+//                "id='" + getId() + "', " +
+//                "status='" + getStatus() + "', " +
+//                "name='" + getName() + "', " +
+//                "description='" + getDescription() + "', " +
+//                "StartTime='" + time + "', " +
+//                "Duration='" + duration + "', " +
+//                "subtasks'=" + subTasks + "', " +
+//                "endTime'=" + getEndTime().toString() +
+//                '}' + "\n";
+//    }
 }

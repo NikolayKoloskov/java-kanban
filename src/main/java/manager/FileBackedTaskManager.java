@@ -58,6 +58,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         this.fileOfTasks = file;
     }
 
+    public FileBackedTaskManager() {
+    }
+
 
 //    public static void main(String[] args) throws ManagerSaveException, IOException {
 //        File file = new File("./src/main/java/manager/StorageOfTasks.cvs");
@@ -265,20 +268,35 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     @Override
     public void createTask(Task task) {
-        super.createTask(task);
-        save();
+        int id = task.getId();
+        if (getTasks().containsKey(id) || getSubTasks().containsKey(id) || getEpicTasks().containsKey(id)) {
+            throw new ManagerSaveException("Задача с таким Id уже существует " + id);
+        } else {
+            super.createTask(task);
+            save();
+        }
     }
 
     @Override
     public void createEpicTask(EpicTask epicTask) {
-        super.createEpicTask(epicTask);
-        save();
+        int id = epicTask.getId();
+        if (getTasks().containsKey(id) || getSubTasks().containsKey(id) || getEpicTasks().containsKey(id)) {
+            throw new ManagerSaveException("Задача с таким Id уже существует " + id);
+        } else {
+            super.createEpicTask(epicTask);
+            save();
+        }
     }
 
     @Override
     public void createSubTask(SubTask subTask) {
-        super.createSubTask(subTask);
-        save();
+        int id = subTask.getId();
+        if (getTasks().containsKey(id) || getSubTasks().containsKey(id) || getEpicTasks().containsKey(id)) {
+            throw new ManagerSaveException("Задача с таким Id уже существует" + id);
+        } else {
+            super.createSubTask(subTask);
+            save();
+        }
     }
 
     @Override
@@ -325,20 +343,32 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     @Override
     public void updateTask(Task task) {
-        super.updateTask(task);
-        save();
+        if (getEpicTasks().containsKey(task.getId()) | getSubTasks().containsKey(task.getId())) {
+            throw new ManagerSaveException("Задача с таким Id уже существует " + task.getId());
+        } else {
+            super.updateTask(task);
+            save();
+        }
     }
 
     @Override
     public void updateEpicTask(EpicTask epicTask) {
-        super.updateEpicTask(epicTask);
-        save();
+        if (getSubTasks().containsKey(epicTask.getId()) | getTasks().containsKey(epicTask.getId())) {
+            throw new ManagerSaveException("Задача с таким Id уже существует " + epicTask.getId());
+        } else {
+            super.updateEpicTask(epicTask);
+            save();
+        }
     }
 
     @Override
     public void updateSubTask(SubTask subTask) {
-        super.updateSubTask(subTask);
-        save();
+        if (getEpicTasks().containsKey(subTask.getId()) | getTasks().containsKey(subTask.getId())) {
+            throw new ManagerSaveException("Задача с таким Id уже существует " + subTask.getId());
+        } else {
+            super.updateSubTask(subTask);
+            save();
+        }
     }
 
     @Override
